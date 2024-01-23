@@ -13,9 +13,6 @@ const Header = () => {
         <Link href="/" className="text-xl font-bold">
             DegreeGuru
         </Link>
-        <Link href="/premium" className="ml-4">
-          premium
-        </Link>
       </div>
 
       <SignedIn>
