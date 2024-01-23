@@ -12,8 +12,6 @@ import { createRetrieverTool } from "langchain/tools/retriever";
 import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 
-import { getUserId } from '@/app/utils/getUserId'
-
 export const runtime = "edge";
 
 const redis = Redis.fromEnv()
@@ -39,9 +37,8 @@ If you don't know how to answer a question, use the available tools to look up r
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const userId = await getUserId()
-    const { success } = await ratelimit.limit(userId);
+    const ip = req.ip ?? "127.0.0.1";
+    const { success } = await ratelimit.limit(ip);
   
     if (!success) {
       return NextResponse.json(
@@ -49,6 +46,9 @@ export async function POST(req: NextRequest) {
         { status: 429 }
       )
     }
+
+    const body = await req.json()
+
     /**
      * We represent intermediate steps as system messages for display purposes,
      * but don't want them in the chat history.
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       (message: VercelChatMessage) =>
         message.role === "user" || message.role === "assistant",
     );
-    const returnIntermediateSteps = body.show_intermediate_steps;
+    const returnIntermediateSteps = false;
     const previousMessages = messages
       .slice(0, -1)
       .map(convertVercelMessageToLangChainMessage);

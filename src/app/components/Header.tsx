@@ -1,9 +1,4 @@
 
-import { 
-  UserButton,
-  SignedIn,
-  SignedOut
- } from "@clerk/nextjs";
  import Link from "next/link";
 
 const Header = () => {
@@ -14,20 +9,6 @@ const Header = () => {
             DegreeGuru
         </Link>
       </div>
-
-      <SignedIn>
-        <UserButton afterSignOutUrl="/" />
-      </SignedIn>
-      <SignedOut>
-        <div>
-          <Link href="/auth/sign-in" className="ml-4">
-            Sign In
-          </Link>
-          <Link href="/auth/sign-up" className="ml-4">
-            Sign Up
-          </Link>
-        </div>
-      </SignedOut>
 
     </div>
   );
