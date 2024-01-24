@@ -1,0 +1,27 @@
+crawler:
+  start_urls:
+    - https://www.mit.edu/education/schools-and-departments/
+  link_extractor:
+    allow_domains:
+      - mit.edu
+    deny:
+      - "#"
+      - course
+      - search
+      - subjects
+      - degree-charts
+      - archive
+      - news
+      - alumni
+      - announcement
+      - people
+      - topics
+index:
+  chroma_client:
+    host: localhost
+    port: 8000
+  openAI_embedding_model: text-embedding-ada-002
+  collection_name: "miteecs"
+  text_splitter:
+    chunk_size: 1000
+    chunk_overlap: 100
