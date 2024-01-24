@@ -34,5 +34,5 @@ class ConfigurableCrawler(CrawlSpider):
 
         collection.add(
             ids=[str(uuid.uuid4())[:8] for doc in documents],
-            documents = documents,
+            documents=documents
         )

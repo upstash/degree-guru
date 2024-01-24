@@ -5,7 +5,7 @@ import { Redis } from "@upstash/redis";
 
 import { Message as VercelChatMessage, StreamingTextResponse } from "ai";
 
-import { Chroma } from "@langchain/community/vectorstores/chroma";
+import { UpstashVectorStore } from "../../vectorstore/UpstashVectorStore"
 import { AIMessage, ChatMessage, HumanMessage } from "@langchain/core/messages";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { createRetrieverTool } from "langchain/tools/retriever";
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       (message: VercelChatMessage) =>
         message.role === "user" || message.role === "assistant",
     );
-    const returnIntermediateSteps = false;
+    const returnIntermediateSteps = true;
     const previousMessages = messages
       .slice(0, -1)
       .map(convertVercelMessageToLangChainMessage);
@@ -70,13 +70,7 @@ export async function POST(req: NextRequest) {
       streaming: true,
     });
 
-    const vectorstore = await Chroma.fromExistingCollection(
-      new OpenAIEmbeddings(),
-      {
-        collectionName: "miteecs",
-        url: process.env.CHROMA_URL
-      }
-    );
+    const vectorstore = await new UpstashVectorStore(new OpenAIEmbeddings());
 
     const retriever = vectorstore.asRetriever();
 

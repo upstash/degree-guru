@@ -1,18 +1,50 @@
-import chromadb
-from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
+import os
+import uuid
+from typing import List
+from upstash_vector import Index
 
-from .config import client_config, embedding_function_config, config
+from openai import OpenAI
+client = OpenAI()
 
-client = chromadb.HttpClient(**client_config)
-embedding_function = OpenAIEmbeddingFunction(**embedding_function_config)
+def get_embeddings(
+        documents: List[str],
+        model: str = "text-embedding-ada-002"
+):
+    documents = [document.replace("\n", " ") for document in documents]
+    embeddings = client.embeddings.create(input = documents, model=model)
+    return [data.embedding for data in embeddings.data]
 
-try:
-    collection = client.create_collection(
-        name=config["index"]["collection_name"],
-        embedding_function=embedding_function
-    )
-except:
-    collection = client.get_collection(
-        name=config["index"]["collection_name"],
-        embedding_function=embedding_function
-    )
+import pdb; pdb.set_trace()
+class UpstashCollection:
+
+    def __init__(
+            self,
+            url: str,
+            token: str
+    ):
+        self.index = Index(url=url, token=token)
+
+    def add(
+        self,
+        ids: List[str],
+        documents: List[str]
+    ):
+        embeddings = get_embeddings(documents)
+        self.index.upsert(
+            vectors=[
+                (
+                    id,
+                    embedding,
+                    {
+                        "text": document
+                    }
+                )
+                for id, embedding, document
+                in zip(ids, embeddings, documents)
+            ]
+        )
+
+collection = UpstashCollection(
+    url=os.environ["UPSTASH_VECTOR_REST_URL"],
+    token=os.environ["UPSTASH_VECTOR_REST_TOKEN"]
+)
