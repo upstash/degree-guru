@@ -5,7 +5,7 @@ from scrapy.linkextractors import LinkExtractor
 
 from ..utils.config import config, text_splitter_config
 from ..utils.text_splitter import LinkInjectingTextSplitter
-from ..utils.chroma_db import collection
+from ..utils.db import collection
 
 text_splitter = LinkInjectingTextSplitter(**text_splitter_config)
 
