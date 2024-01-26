@@ -38,6 +38,8 @@ As outlined in the project description, it comprises two primary components: the
 
 The crawler is developed using Python, wherein a Scrapy project is initialized, and a custom spider is implemented. The spider is equipped with a callback function, invoked each time the spider visits a webpage. This callback function performs the task of segmenting the text on the webpage into chunks, generating embeddings for each chunk, and subsequently upserting the vectors into the Upstash Vector Database. Alongside the vectors representing the text, the chunk's text and the website URL are transmitted to the database as metadata.
 
+</br>
+
 To execute the crawler, follow the steps outlined below:
 
 <details>
@@ -87,6 +89,8 @@ pip install -r requirements.txt
 
 </details>
 
+</br>
+
 Upon configuring the environment variables and establishing the virtual environment, you are on the verge of launching the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the 'crawler.yaml' file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.
 
 <details>
@@ -109,7 +113,6 @@ index:
   text_splitter:
     chunk_size: 1000
     chunk_overlap: 100
-
 ```
 
 Under the `crawler` section, there are two sections:
@@ -132,6 +135,8 @@ Under the `index` section, there are two sections:
 
 Scrapy logs the url of a page when it stops crawling it because of the depth limit. Since this results in a lot of logs, we disabled this debug log. To enable it back, simply remove the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file.
 </details>
+
+</br>
 
 When you finish configuring the crawler, you are finally ready to run it to create the Upstash Vector Database! Run the following command to run the crawler:
 
@@ -175,6 +180,8 @@ The chat bot can be configured to work in two modes:
 <summary>Changing Streaming Mode</summary>
 To change enable/disable streaming, simply navigate to `src/app/route/guru` directory and open `route.tsx` file. Setting `returnIntermediateSteps` to `true` disabled streaming while setting it to `false` enables streaming.`
 </details>
+
+</br>
 
 ## Shortcomings
 
