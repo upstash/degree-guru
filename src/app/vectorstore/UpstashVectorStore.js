@@ -28,7 +28,7 @@ export class UpstashVectorStore extends VectorStore {
         for (let i = 0; i < result.length; i++) {
             results.push([
                 new Document({
-                    pageContent: result[i]?.metadata.text || "",
+                    pageContent: JSON.stringify(result[i]?.metadata) || "",
                 }),
             ]);
         }
