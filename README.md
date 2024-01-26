@@ -116,15 +116,15 @@ index:
 ```
 
 Under the `crawler` section, there are two sections:
-`start_urls`: denotes a list of urls which are the urls our crawler will start searching from
-`link_extractor`: denotes a dictionary which will be passed as arguments to [`scrapyscrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
-`allow`: Only extracts links which match the given regex(s)
-`allow_domains`: Only extract links which match the domain(s)
-`deny`: Deny links which match the given regex(s)
+- `start_urls`: denotes a list of urls which are the urls our crawler will start searching from
+- `link_extractor`: denotes a dictionary which will be passed as arguments to [`scrapyscrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
+    - `allow`: Only extracts links which match the given regex(s)
+    - `allow_domains`: Only extract links which match the domain(s)
+    - `deny`: Deny links which match the given regex(s)
 
 Under the `index` section, there are two sections:
-`openAI_embedding_model`: embedding model to use
-`test_splitter`: denotes a dictionary which will be passed as arguments to [`langchain.text_splitter.RecursiveCharacterTextSplitter`](https://api.python.langchain.com/en/latest/text_splitter/langchain.text_splitter.RecursiveCharacterTextSplitter.html)
+- `openAI_embedding_model`: embedding model to use
+- `test_splitter`: denotes a dictionary which will be passed as arguments to [`langchain.text_splitter.RecursiveCharacterTextSplitter`](https://api.python.langchain.com/en/latest/text_splitter/langchain.text_splitter.RecursiveCharacterTextSplitter.html)
 
 </details>
 
