@@ -163,8 +163,17 @@ export async function POST(req: NextRequest) {
         input: currentMessageContent,
         chat_history: previousMessages,
       });
+
+      const urls = JSON.parse(
+        `[${result.intermediateSteps[0]?.observation.replaceAll('}\n\n{', '}, {')}]`
+      ).map((source: { url: any; }) => source.url)
+
       return NextResponse.json(
-        { output: result.output, intermediate_steps: result.intermediateSteps },
+        {
+          _no_streaming_response_: true,
+          output: result.output,
+          sources: urls
+        },
         { status: 200 },
       );
     }

@@ -13,12 +13,27 @@ export default function Home() {
     <div className="flex flex-col h-screen">
       <Header />
       <div className="flex flex-col items-center justify-center flex-grow p-4">
-        {messages.map(m => (
+      {messages.map(m => {
+        let contentToRender;
+
+        if (m.role === 'user') {
+          contentToRender = `User: ${m.content}`;
+        } else if (m.content.includes("_no_streaming_response_")) {
+          const parsedContent = JSON.parse(m.content);
+          const sources = parsedContent.sources
+          contentToRender = `AI: ${parsedContent.output}\n\nSources:\n${sources.map( (url: string) => `- ${url}\n`).join('')}`;
+        } else {
+          contentToRender = `AI: ${m.content}`;
+        }
+
+        return (
           <div key={m.id} className="whitespace-pre-wrap">
-            {m.role === 'user' ? 'User: ' : 'AI: '}
-            {m.content}
+            {contentToRender}
           </div>
-        ))}
+        );
+      })}
+
+
         
         <div>
           <form onSubmit={handleSubmit}>
