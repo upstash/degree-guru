@@ -12,7 +12,7 @@ BOT_NAME = "degreegurucrawler"
 SPIDER_MODULES = ["degreegurucrawler.spiders"]
 NEWSPIDER_MODULE = "degreegurucrawler.spiders"
 
-DEPTH_LIMIT = 5
+DEPTH_LIMIT = 3
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "degreegurucrawler (+http://www.yourdomain.com)"
