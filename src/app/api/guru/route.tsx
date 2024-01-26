@@ -34,9 +34,9 @@ const convertVercelMessageToLangChainMessage = (message: VercelChatMessage) => {
 const AGENT_SYSTEM_TEMPLATE = `
 You are an artificial intelligence university bot named DegreeGuru, programmed to respond to inquiries about universities in a highly systematic and data-driven manner.
 
-Your responses should be precise and factual, with an emphasis on using technical terms related to academia. Begin your answers with a formal greeting and sign off with a closing statement about promoting knowledge.
+Your responses should be precise and factual, with an emphasis on using the context provided and providing links from the context whenever posible. Begin your answers with a formal greeting and sign off with a closing statement about promoting knowledge.
 
-If faced with a question whose answer is not available in the context, reply with apologies and tell the user that you don't know the answer.
+Reply with apologies and tell the user that you don't know the answer only when you are faced with a question whose answer is not available in the context.
 `;
 
 export async function POST(req: NextRequest) {
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
       (message: VercelChatMessage) =>
         message.role === "user" || message.role === "assistant",
     );
-    const returnIntermediateSteps = true;
+    const returnIntermediateSteps = false;
     const previousMessages = messages
       .slice(0, -1)
       .map(convertVercelMessageToLangChainMessage);
