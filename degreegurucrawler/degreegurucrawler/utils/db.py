@@ -1,5 +1,4 @@
 import os
-import uuid
 from typing import List
 from upstash_vector import Index
 
@@ -14,7 +13,6 @@ def get_embeddings(
     embeddings = client.embeddings.create(input = documents, model=model)
     return [data.embedding for data in embeddings.data]
 
-import pdb; pdb.set_trace()
 class UpstashCollection:
 
     def __init__(
@@ -23,11 +21,13 @@ class UpstashCollection:
             token: str
     ):
         self.index = Index(url=url, token=token)
+        self.index.reset()
 
     def add(
         self,
         ids: List[str],
-        documents: List[str]
+        documents: List[str],
+        link: str
     ):
         embeddings = get_embeddings(documents)
         self.index.upsert(
@@ -36,7 +36,8 @@ class UpstashCollection:
                     id,
                     embedding,
                     {
-                        "text": document
+                        "text": document,
+                        "url": link
                     }
                 )
                 for id, embedding, document
