@@ -91,7 +91,7 @@ pip install -r requirements.txt
 
 </br>
 
-Upon configuring the environment variables and establishing the virtual environment, you are on the verge of launching the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the 'crawler.yaml' file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.
+Upon configuring the environment variables and establishing the virtual environment, you are on the verge of launching the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the `crawler.yaml` file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.
 
 <details>
 <summary>Configuring the Crawler Through `crawler.yaml`</summary>
@@ -117,7 +117,7 @@ index:
 
 Under the `crawler` section, there are two sections:
 - `start_urls`: denotes a list of urls which are the urls our crawler will start searching from
-- `link_extractor`: denotes a dictionary which will be passed as arguments to [`scrapyscrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
+- `link_extractor`: denotes a dictionary which will be passed as arguments to [`scrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
     - `allow`: Only extracts links which match the given regex(s)
     - `allow_domains`: Only extract links which match the domain(s)
     - `deny`: Deny links which match the given regex(s)
@@ -131,20 +131,24 @@ Under the `index` section, there are two sections:
 <details>
 <summary>Configuring Depth Through `settings.py`</summary>
 
-`settings.py` file has an important setting `DEPTH_LIMIT` which determines how many consecutive link our spider can crawl. Set a value too high, the spider will visit the deepest corners of the website. Set a value too low, the crawl will end before visiting relevant pages.
+`settings.py` file has an important setting called `DEPTH_LIMIT` which determines how many consecutive links our spider can crawl. Set a value too high and the spider will visit the deepest corners of the website, taking too long to finish with possibly diminishing returns. Set a value too low and the crawl will end before visiting relevant pages.
 
-Scrapy logs the url of a page when it stops crawling it because of the depth limit. Since this results in a lot of logs, we disabled this debug log. To enable it back, simply remove the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file.
+Scrapy logs the urls of pages when they are skipped because of the depth limit. Since this results in a lot of logs, this log type is disabled in our project. To enable it back, simply remove the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file.
 </details>
 
 </br>
 
-When you finish configuring the crawler, you are finally ready to run it to create the Upstash Vector Database! Run the following command to run the crawler:
+When you finish configuring the crawler, you are finally ready to run it to create the Upstash Vector Database! Run the following command to start the crawler:
 
 ```
 scrapy crawl configurable --logfile degreegurucrawl.log
 ```
 
-Note that this will take some time. You can observe the progress by looking at the log file `degreegurucrawl.log` or from the metrics in the dashboard of your Upstash Vector Database. If you want to do a dry run (simply crawl the website without generating embeddings), you can achieve this by simply by commenting the line out where we pass the `callback` parameter when initializing the `Rule` object in `ConfigurableCrawler`
+Note that this will take some time. You can observe the progress by looking at the log file `degreegurucrawl.log` or from the metrics in the dashboard of your Upstash Vector Database.
+
+![vector-db](figs/vector-db.png)
+
+If you want to do a dry run (simply crawl the website without generating embeddings), you can achieve this by simply by commenting the line out where we pass the `callback` parameter when initializing the `Rule` object in `ConfigurableCrawler`
 
 ### ChatBot
 
