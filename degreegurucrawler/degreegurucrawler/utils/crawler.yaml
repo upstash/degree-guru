@@ -2,10 +2,10 @@ crawler:
   start_urls:
     - https://www.mit.edu/education/schools-and-departments/
   link_extractor:
-    allow_domains:
-      - mit.edu
+    allow: '.*mit\.edu.*'
     deny:
       - "#"
+      - '\?'
       - course
       - search
       - subjects
@@ -16,6 +16,20 @@ crawler:
       - announcement
       - people
       - topics
+      - membership
+      - section
+      - about
+      - letter
+      - member
+      - committee
+      - book
+      - year
+      - project
+      - user
+      - page
+      - event
+      - resource
+      - login
 index:
   openAI_embedding_model: text-embedding-ada-002
   text_splitter:
