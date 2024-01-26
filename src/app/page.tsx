@@ -4,6 +4,11 @@ import { useChat } from 'ai/react';
 
 import Header from "./components/Header";
 
+interface MyData {
+  output: string;
+  sources: string[];
+}
+
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "api/guru"
@@ -19,9 +24,9 @@ export default function Home() {
         if (m.role === 'user') {
           contentToRender = `User: ${m.content}`;
         } else if (m.content.includes("_no_streaming_response_")) {
-          const parsedContent = JSON.parse(m.content);
-          const sources = parsedContent.sources
-          contentToRender = `AI: ${parsedContent.output}\n\nSources:\n${sources.map( (url: string) => `- ${url}\n`).join('')}`;
+          const parsedContent: MyData = JSON.parse(m.content);
+          const setsources = Array.from(new Set(parsedContent.sources).values())
+          contentToRender = `AI: ${parsedContent.output}\n\nSources:\n${setsources.map( (url: string) => `- ${url}\n`).join('')}`;
         } else {
           contentToRender = `AI: ${m.content}`;
         }
@@ -33,8 +38,6 @@ export default function Home() {
         );
       })}
 
-
-        
         <div>
           <form onSubmit={handleSubmit}>
             <input
