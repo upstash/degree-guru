@@ -1,6 +1,7 @@
 "use client"
 
 import { useChat } from 'ai/react';
+import Markdown from 'markdown-to-jsx'
 
 import Header from "./components/Header";
 
@@ -34,8 +35,10 @@ export default function Home() {
           }
 
           return (
-            <div key={m.id} className="whitespace-pre-wrap max-w-md my-4">
-              {contentToRender}
+            <div key={m.id} className="whitespace-pre-wrap max-w-lg my-4">
+              <Markdown>
+                {contentToRender}
+              </Markdown>
             </div>
           );
         })}
