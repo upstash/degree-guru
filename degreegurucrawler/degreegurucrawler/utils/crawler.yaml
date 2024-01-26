@@ -1,8 +1,8 @@
 crawler:
   start_urls:
-    - https://www.mit.edu/education/schools-and-departments/
+    - https://www.some.domain.com
   link_extractor:
-    allow: '.*mit\.edu.*'
+    allow: '.*some\.domain.*'
     deny:
       - "#"
       - '\?'
