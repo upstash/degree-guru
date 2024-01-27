@@ -48,10 +48,9 @@ To execute the crawler, follow the steps outlined below:
 Before initiating the crawler, it is essential to configure environment variables. These variables serve the purpose of enabling text embedding with OpenAI and facilitating the transmission of vectors to the Upstash Vector Database.
 
 
-> [!TIP]
-> If you don't have an Upstash Vector Database already, create one by setting 1536 as the vector size to match the [text-embedding-ada-002](https://platform.openai.com/docs/guides/embeddings) model.
->
-> ![vector-db-create](figs/vector-db-create.png)
+If you don't have an Upstash Vector Database already, create one by setting 1536 as the vector size to match the [text-embedding-ada-002](https://platform.openai.com/docs/guides/embeddings) model.
+
+![vector-db-create](figs/vector-db-create.png)
 
 
 Following environment variables should be set:
@@ -135,9 +134,7 @@ Under the `index` section, there are two sections:
 
 `settings.py` file has an important setting called `DEPTH_LIMIT` which determines how many consecutive links our spider can crawl. Set a value too high and the spider will visit the deepest corners of the website, taking too long to finish with possibly diminishing returns. Set a value too low and the crawl will end before visiting relevant pages.
 
-
-> [!TIP]
-> Scrapy logs the urls of pages when they are skipped because of the depth limit. Since this results in a lot of logs, this log type is disabled in our project. To enable it back, simply remove [the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L22).
+Scrapy logs the urls of pages when they are skipped because of the depth limit. Since this results in a lot of logs, this log type is disabled in our project. To enable it back, simply remove [the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L22).
 
 </details>
 
@@ -189,7 +186,9 @@ The chat bot can be configured to work in two modes:
 
 <details>
 <summary>Changing Streaming Mode</summary>
+
 To enable/disable streaming, simply navigate to `src/app/route/guru` directory and open `route.tsx` file. Setting [`returnIntermediateSteps`](https://github.com/upstash/degreeguru/blob/master/src/app/api/guru/route.tsx#L64) to `true` disables streaming while setting it to `false` enables streaming.`
+
 </details>
 
 </br>
