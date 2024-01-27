@@ -1,10 +1,12 @@
 # DegreeGuru
 
-DegreeGuru is an innovative chatbot project designed to effortlessly integrate a chatbot into any web project, enabling seamless question-answering functionality within an hour. The project includes a configurable crawler that meticulously traverses the target website, indexing its contents into an Upstash Vector Database. This database becomes the backbone for the chatbot, allowing it to swiftly retrieve relevant context when users pose questions.
+![overview](figs/overview.png)
 
-Upon receiving a user query, the chatbot leverages the Upstash Vector Database to deliver accurate responses utilizing streaming with Vercel AI. Additionally, Upstash rate limiting is employed to control access, preventing excessive queries from a particular IP address.
+**DegreeGuru** is a chatbot project designed to effortlessly integrate a chatbot into any web project, enabling seamless question-answering functionality within an hour. The project includes a configurable crawler that meticulously traverses the target website, indexing its contents into an Upstash Vector Database. This database becomes the backbone for the chatbot, allowing it to swiftly retrieve relevant context when users pose questions.
 
-The project employs OpenAI embeddings during both the web crawling phase and the user query embedding process. OpenAI models play a crucial role in generating responses by utilizing the relevant context retrieved from the Upstash Vector Database.
+Upon receiving a user query, the chatbot leverages the **Upstash Vector Database** to deliver accurate responses utilizing **streaming with Vercel AI**. Additionally, **Upstash rate limiting** is employed to control access, preventing excessive queries from a particular IP address.
+
+The project employs **OpenAI embeddings** during both the web crawling phase and the user query embedding process. OpenAI models play a crucial role in generating responses by utilizing the relevant context retrieved from the Upstash Vector Database.
 
 Despite its name, DegreeGuru is not limited to any specific domain; it is domain-agnostic. The chatbot can proficiently answer questions from any topic, provided the information is appropriately stored in the vector database. The only domain-specific aspect lies in the crawler settings, which are configurable in the crawler.yaml file and geared towards universities. The chatbot underwent testing by crawling a university website, with a refined denied keyword list ensuring that pages containing specific words in their URLs are excluded from the crawling process.
 
@@ -12,7 +14,12 @@ The versatility of the DegreeGuru project extends beyond crawling university web
 
 ## Overview
 
-![overview](figs/overview.png)
+1. [Stack](#stack)
+2. [Quickstart](#quickstart)
+    1. [Crawler](#crawler)
+    2. [ChatBot](#chatbot)
+3. [Conclusion](#conclusion)
+4. [Shortcomings](#shortcomings)
 
 ## Stack
 
@@ -172,7 +179,7 @@ cp .env.local.example .env.local
 
 Finally, set the `OPENAI_API_KEY` environment variable to embed user queries and to generate a response.
 
-Once the environment variables are set, DegreeGuru is finally ready to wake up and share its wisdom with the whole world. Simply run the following the start DegreeGuru web application:
+Once the environment variables are set, DegreeGuru is finally ready to wake up and share its wisdom with the whole world. Simply run the following to start DegreeGuru web application:
 
 ```bash
 npm run dev
@@ -192,6 +199,10 @@ To enable/disable streaming, simply navigate to `src/app/route/guru` directory a
 </details>
 
 </br>
+
+## Conclusion
+
+In conclusion, DegreeGuru project seamlessly integrates Langchain, Vercel AI, Upstash rate limiting, and Upstash Vector Database. The chatbot delivers accurate responses by efficiently indexing content, demonstrated by the tests we carried out on a university website. With a user-friendly interface and adaptable settings, DegreeGuru is a valuable tool for developers, enhancing user interactions and information retrieval.
 
 ## Shortcomings
 
