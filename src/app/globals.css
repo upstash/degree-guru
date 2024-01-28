@@ -25,3 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+#message-box {
+  a {
+    color: #0077ee;
+  }
+}

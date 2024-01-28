@@ -35,7 +35,7 @@ export default function Home() {
           }
 
           return (
-            <div key={m.id} className="whitespace-pre-wrap max-w-lg my-4">
+            <div id="message-box" key={m.id} className="whitespace-pre-wrap max-w-3xl my-4">
               <Markdown>
                 {contentToRender}
               </Markdown>
