@@ -16,18 +16,10 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.text {
+  color: #43403B
 }
 
-#message-box {
-  a {
-    color: #0077ee;
-  }
+a {
+  color: #0077ee
 }
