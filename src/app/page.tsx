@@ -8,7 +8,7 @@ export default function Home() {
     api: "/api/guru"
   });
   return (
-    <div className="p:2 flex h-screen flex-col items-center justify-between bg-[#F0F0F0]">
+    <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
       <div className="mb-1 w-full bg-[#FFFFFF] p-4 px-4 pt-4">
         <h1 className="text-lg font-semibold">DegreeGuru</h1>
       </div>
