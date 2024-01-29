@@ -12,7 +12,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const roleText = message.role === 'user' ? 'Question' : 'DegreeGuru';
 
   return (
-    <div className={`p-2 px-5 mb-1 ${containerClass}`}>
+    <div className={`p-2 px-5 border-b ${containerClass}`}>
       <div>
         <Markdown>
           {`**${roleText}:** ${message.content}`}

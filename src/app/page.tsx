@@ -9,19 +9,19 @@ export default function Home() {
   });
   return (
     <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
-      <div className="mb-1 w-full bg-[#FFFFFF] p-4 px-4 pt-4">
+      <div className="w-full bg-[#FFFFFF] p-4 px-4 pt-4 border-b">
         <h1 className="text-lg font-semibold">DegreeGuru</h1>
       </div>
-      <div className="w-1/2 flex flex-col justify-between items-center flex-grow">
+      <div className="w-1/2 flex flex-col justify-between items-center flex-grow border-x">
         <div
           id="messages"
-          className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto"
+          className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto w-full"
         >
           {
             messages.map(m => (<Message message={m}/>))
           }
         </div>
-        <div className="border-t-2 border-gray-200 w-full relative flex">
+        <div className="border-t border-gray-200 w-full relative flex">
             <form
               onSubmit={handleSubmit}
               className="m-auto flex w-full max-w-screen-lg items-center justify-center space-x-4 p-4"
