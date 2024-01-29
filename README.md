@@ -1,6 +1,6 @@
 # DegreeGuru
 
-![overview](figs/overview.png)
+![overview](figs/overview.gif)
 
 **DegreeGuru** is a chatbot project designed to effortlessly integrate a chatbot into any web project, enabling seamless question-answering functionality within an hour. The project includes a configurable crawler that meticulously traverses the target website, indexing its contents into an Upstash Vector Database. This database becomes the backbone for the chatbot, allowing it to swiftly retrieve relevant context when users pose questions.
 
