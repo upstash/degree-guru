@@ -1,6 +1,6 @@
 # DegreeGuru
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fhello-world&env=UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,OPENAI_API_KEY,UPSTASH_VECTOR_REST_URL,UPSTASH_VECTOR_REST_TOKEN&envDescription=OpenAI%20token%20is%20used%20for%20generating%20a%20response%20message%20from%20the%20context.%20Upstash%20variables%20are%20for%20rate%20limiting%20and%20accessing%20vector%20database.&project-name=degreeguru)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fupstash%2FDegreeGuru.git&env=UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,OPENAI_API_KEY,UPSTASH_VECTOR_REST_URL,UPSTASH_VECTOR_REST_TOKEN&envDescription=OpenAI%20token%20is%20used%20for%20generating%20a%20response%20message%20from%20the%20context.%20Upstash%20variables%20are%20for%20rate%20limiting%20and%20accessing%20vector%20database.&project-name=degreeguru)
 
 ![overview](figs/overview.gif)
 
