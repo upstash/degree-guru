@@ -18,7 +18,7 @@ export default function Home() {
           className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto w-full"
         >
           {
-            messages.map(m => (<Message message={m}/>))
+            messages.map(m => (<Message message={m} key={m.id}/>))
           }
         </div>
         <div className="border-t border-gray-200 w-full relative flex">
