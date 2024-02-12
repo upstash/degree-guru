@@ -7,12 +7,12 @@ export class UpstashVectorStore extends VectorStore {
         return "upstash";
     }
 
-    constructor(embeddings) {
+    constructor(embeddings, vectorUrl, vectorToken) {
         super(embeddings);
 
         this.index = new Index({
-            url: process.env.UPSTASH_VECTOR_URL,
-            token: process.env.UPSTASH_VECTOR_TOKEN,
+            url: vectorUrl,
+            token: vectorToken,
         });
     }
 

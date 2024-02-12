@@ -5,12 +5,15 @@ import { Redis } from "@upstash/redis";
 
 import { Message as VercelChatMessage, StreamingTextResponse } from "ai";
 
-import { UpstashVectorStore } from "../../vectorstore/UpstashVectorStore"
 import { AIMessage, ChatMessage, HumanMessage } from "@langchain/core/messages";
-import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
+
+import { createVectorStore, VectorStoreError } from "../../vectorstore/VectorStoreConfig";
+import { UpstashVectorStore } from "../../vectorstore/UpstashVectorStore"
+
 
 export const runtime = "edge";
 
@@ -30,14 +33,6 @@ const convertVercelMessageToLangChainMessage = (message: VercelChatMessage) => {
     return new ChatMessage(message.content, message.role);
   }
 };
-
-const AGENT_SYSTEM_TEMPLATE = `
-You are an artificial intelligence university bot named DegreeGuru, programmed to respond to inquiries about universities in a highly systematic and data-driven manner.
-
-Your responses should be precise and factual, with an emphasis on using the context provided and providing links from the context whenever posible. Begin your answers with a formal greeting and sign off with a closing statement about promoting knowledge.
-
-Reply with apologies and tell the user that you don't know the answer only when you are faced with a question whose answer is not available in the context.
-`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -74,7 +69,23 @@ export async function POST(req: NextRequest) {
       streaming: true,
     });
 
-    const vectorstore = await new UpstashVectorStore(new OpenAIEmbeddings());
+    // Extract vector store choice from request body
+    const vectorStoreChoice = body.data.vectorStore;
+
+    let vectorstore: UpstashVectorStore;
+    try {
+      // Create vector store based on the choice
+      vectorstore = createVectorStore(vectorStoreChoice);
+    } catch (error) {
+      if (error instanceof VectorStoreError) {
+        // Handle invalid vector store choice or missing environment variables
+        return NextResponse.json({ message: error.message }, { status: 400 });
+      } else {
+        // Handle other errors
+        console.error(error);
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+      }
+    }
 
     const retriever = vectorstore.asRetriever();
 
@@ -95,6 +106,15 @@ export async function POST(req: NextRequest) {
      *
      * You can customize this prompt yourself!
      */
+
+    const AGENT_SYSTEM_TEMPLATE = `
+    You are an artificial intelligence university bot named DegreeGuru, programmed to respond to inquiries about the university ${vectorStoreChoice} in a highly systematic and data-driven manner.
+
+    Your responses should be precise and factual, with an emphasis on using the context provided and providing links from the context whenever posible. Begin your answers with a formal greeting and sign off with a closing statement about promoting knowledge.
+
+    Reply with apologies and tell the user that you don't know the answer only when you are faced with a question whose answer is not available in the context.
+    `;
+
     const prompt = ChatPromptTemplate.fromMessages([
       ["system", AGENT_SYSTEM_TEMPLATE],
       new MessagesPlaceholder("chat_history"),

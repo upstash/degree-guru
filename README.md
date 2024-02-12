@@ -175,7 +175,9 @@ cp .env.local.example .env.local
 
 ![vector-db-read-only](figs/vector-db-read-only.png)
 
-`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are needed for rate-limiting based on IP address. In order to get these secrets, go to Upstash dashboard and create a Redis database
+In our project, we have three vector stores, each representing one university. Therefore, we have three pairs of environment variables for vector stores. To configure the chatbot for different options, update [`VectorStoreConfig.ts`](https://github.com/upstash/DegreeGuru/blob/master/src/app/vectorstore/VectorStoreConfig.ts) to update the api endpoint and [`page.tsx`](https://github.com/upstash/DegreeGuru/blob/master/src/app/page.tsx) to update the ui. Additionally, you will need to change `.env.local`, which is created by copying [`.env.local.example`](#chatbot)
+
+`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are needed for rate-limiting based on IP address. In order to get these secrets, go to Upstash dashboard and create a Redis database.
 
 ![redis-create](figs/redis-create.png)
 
