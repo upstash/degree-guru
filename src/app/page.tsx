@@ -7,7 +7,7 @@ import {Tabs, Tab} from "@nextui-org/react";
 
 export default function Home() {
   const [selectedOption, setSelectedOption] = useState<"MIT" | "Stanford" | "Harvard">("MIT");
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: "/api/guru"
   });
 
@@ -27,6 +27,7 @@ export default function Home() {
             }}
             selectedKey={selectedOption}
             onSelectionChange={(key) => {
+              setMessages([])
               setSelectedOption(key as "MIT" | "Stanford" | "Harvard")
             }}
           >
