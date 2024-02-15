@@ -10,15 +10,25 @@ import Landing from './components/Landing';
 export default function Home() {
   const [state, setSelectedOption] = useState<{
     selected: ChoicesType;
-    showLanding: boolean
+    showLanding: boolean;
+    streaming: boolean
   }>({
     selected: "Stanford",
-    showLanding: true
+    showLanding: true,
+    streaming: false
   });
 
   const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
-    api: "/api/guru"
+    api: "/api/guru",
+    onFinish: () => {
+      setSelectedOption(prevState => ({
+        ...prevState,
+        streaming: false
+      }));
+    }
   });
+
+  console.log(state.streaming)
 
   return (
     <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
@@ -40,6 +50,7 @@ export default function Home() {
               }));
             }}
             selected={state.selected}
+            disabled={state.streaming}
           />
         </div>
         <div>
@@ -67,7 +78,8 @@ export default function Home() {
                 });
                 setSelectedOption(prevState => ({
                   ...prevState,
-                  showLanding: false
+                  showLanding: false,
+                  streaming: true
                 }));
               }}
               className="m-auto flex w-full max-w-screen-lg items-center justify-center space-x-4 p-4"
@@ -75,13 +87,17 @@ export default function Home() {
               <input
                 id="message"
                 type="text"
+                disabled={state.streaming}
                 value={input}
                 onChange={handleInputChange}
                 x-model="newMessage"
-                placeholder="Your message..."
-                className="flex-1 rounded-md border border-gray-300 p-2"  
+                placeholder="Your question..."
+                className="transition flex-1 rounded-md border border-gray-300 p-2"  
               />
-              <button className="rounded-md bg-gray-800 px-4 py-2 text-[#F0F0F0]">
+              <button
+                className="transition rounded-md bg-gray-800 px-4 py-2 text-[#F0F0F0] disabled:bg-gray-300"
+                disabled={state.streaming}
+              >
                 Send
               </button>
             </form>
