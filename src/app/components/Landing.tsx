@@ -7,18 +7,18 @@ const Landing = () => {
       <div className="p-2 px-5 border-b bg-[#F8F8F8] text-[#43403B] space-y-4">
         <p className="text-xl">Welcome to DegreeGuru – Your Gateway to Universities!</p>
         <p>
-          Are you eager to explore the realms of higher education at some of the world's most prestigious institutions? Look no further! Welcome to DegreeGuru, your ultimate companion in navigating the academic landscapes of MIT, Harvard, and Stanford.
+          Are you eager to explore the realms of higher education at some of the world&apos;s most prestigious institutions? Look no further! Welcome to DegreeGuru, your ultimate companion in navigating the academic landscapes of MIT, Harvard, and Stanford.
         </p>
-        <h2>Here's how it works:</h2>
+        <h2>Here&apos;s how it works:</h2>
         <ol>
           <li>
-            <strong>1. Select Your Institution:</strong> At the top of the page, you'll find a selection bar where you can choose the university you're interested in – whether it's the groundbreaking innovation hub of MIT, the historic corridors of Harvard, or the cutting-edge research powerhouse of Stanford.
+            <strong>1. Select Your Institution:</strong> At the top of the page, you&apos;ll find a selection bar where you can choose the university you&apos;re interested in – whether it&apos;s the groundbreaking innovation hub of MIT, the historic corridors of Harvard, or the cutting-edge research powerhouse of Stanford.
           </li>
           <li>
-            <strong>2. Ask Away:</strong> Once you've selected your preferred university, simply type your question into the text field at the bottom of the page. Whether you're seeking information about programs, admissions, campus life, or anything else, DegreeGuru is here to assist you.
+            <strong>2. Ask Away:</strong> Once you&apos;ve selected your preferred university, simply type your question into the text field at the bottom of the page. Whether you&apos;re seeking information about programs, admissions, campus life, or anything else, DegreeGuru is here to assist you.
           </li>
           <li>
-            <strong>3. Get Informed:</strong> Hit enter or click the Send button, and watch as DegreeGuru works its magic. Our bot scours the depths of the university's website to find the most relevant and up-to-date information, delivering it straight to you in a flash.
+            <strong>3. Get Informed:</strong> Hit enter or click the Send button, and watch as DegreeGuru works its magic. Our bot scours the depths of the university&apos;s website to find the most relevant and up-to-date information, delivering it straight to you in a flash.
           </li>
         </ol>
         <p>
