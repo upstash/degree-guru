@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link'
 import { useChat } from 'ai/react';
 import Message from './components/Message';
 import { Choices, ChoicesType } from './components/Choices';
+import Landing from './components/Landing';
 
 export default function Home() {
-  const [selectedOption, setSelectedOption] = useState<ChoicesType>("MIT");
+  const [state, setSelectedOption] = useState<{
+    selected: ChoicesType;
+    showLanding: boolean
+  }>({
+    selected: "Stanford",
+    showLanding: true
+  });
+
   const { messages, input, handleInputChange, handleSubmit, setMessages } = useChat({
     api: "/api/guru"
   });
@@ -15,15 +24,22 @@ export default function Home() {
     <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
       <div className="w-full bg-[#FFFFFF] pr-40 border-b flex flex-row justify-between">
         <div className="p-4">
-          <h1 className="text-xl font-semibold">DegreeGuru</h1>
+          <h1 >
+            <Link className="text-xl font-semibold text-[#43403B]" href="/">
+              DegreeGuru
+            </Link>
+          </h1>
         </div>
         <div>
           <Choices
             handleChange={(key) => {
               setMessages([])
-              setSelectedOption(key as ChoicesType)
+              setSelectedOption(prevState => ({
+                ...prevState,
+                selected: key as ChoicesType
+              }));
             }}
-            selected={selectedOption}
+            selected={state.selected}
           />
         </div>
         <div>
@@ -36,7 +52,9 @@ export default function Home() {
           className="transition scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto w-full"
         >
           {
-            messages.map(m => (<Message message={m} key={m.id}/>))
+            messages.length == 0 && state.showLanding
+            ? <Landing/>
+            : messages.map(m => (<Message message={m} key={m.id}/>))
           }
         </div>
         <div className="border-t border-gray-200 w-full relative">
@@ -44,9 +62,13 @@ export default function Home() {
               onSubmit={e => {
                 handleSubmit(e, {
                   data: {
-                    vectorStore: selectedOption
+                    vectorStore: state.selected
                   },
                 });
+                setSelectedOption(prevState => ({
+                  ...prevState,
+                  showLanding: false
+                }));
               }}
               className="m-auto flex w-full max-w-screen-lg items-center justify-center space-x-4 p-4"
             >

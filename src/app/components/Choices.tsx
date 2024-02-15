@@ -1,5 +1,3 @@
-import Markdown from 'markdown-to-jsx'
-import { List } from 'postcss/lib/list';
 import { Dispatch, SetStateAction } from 'react';
 
 export type ChoicesType = "MIT" | "Stanford" | "Harvard"
@@ -30,7 +28,7 @@ interface ChoicesProps {
 }
 
 export const Choices: React.FC<ChoicesProps> = ({ handleChange, selected }) => {
-  const choices: ChoicesType[] = ["MIT", "Stanford", "Harvard"]
+  const choices: ChoicesType[] = ["Stanford", "MIT", "Harvard"]
 
   return (
     <div className="border rounded-md flex mt-2 px-1 bg-[#F0F0F0]">
