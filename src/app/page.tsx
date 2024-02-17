@@ -54,7 +54,7 @@ export default function Home() {
           {/* empty div */}
         </div>
       </div>
-      <div className="w-1/2 flex flex-col justify-between items-center flex-grow border-x">
+      <div className="transition-all w-3/4 lg:w-1/2 flex flex-col justify-between items-center flex-grow border-x">
         <div
           id="messages" 
           className="transition scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto w-full"
