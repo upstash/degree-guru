@@ -29,8 +29,8 @@ export default function Home() {
   });
 
   return (
-    <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
-      <div className="w-full bg-[#FFFFFF] pr-40 border-b flex flex-row justify-between">
+    <div className="p:2 flex h-screen flex-col items-center justify-between bg-[#F0F0F0]">
+      <div className="w-full h-1/10 bg-[#FFFFFF] pr-40 border-b flex flex-row justify-between">
         <div className="p-4">
           <h1 >
             <Link className="text-xl font-semibold text-[#43403B]" href="/">
@@ -54,10 +54,10 @@ export default function Home() {
           {/* empty div */}
         </div>
       </div>
-      <div className="transition-all w-3/4 lg:w-1/2 flex flex-col justify-between items-center flex-grow border-x">
+      <div className="transition-all w-3/4 lg:w-1/2 h-9/10 flex flex-col justify-between items-center flex-grow overflow-y-auto border-x">
         <div
           id="messages" 
-          className="transition scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col overflow-y-auto w-full"
+          className="transition scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col w-full"
         >
           <Landing/>
           {
