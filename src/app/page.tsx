@@ -28,8 +28,6 @@ export default function Home() {
     }
   });
 
-  console.log(state.streaming)
-
   return (
     <div className="p:2 flex min-h-screen flex-col items-center justify-between bg-[#F0F0F0]">
       <div className="w-full bg-[#FFFFFF] pr-40 border-b flex flex-row justify-between">
@@ -43,7 +41,6 @@ export default function Home() {
         <div>
           <Choices
             handleChange={(key) => {
-              setMessages([])
               setSelectedOption(prevState => ({
                 ...prevState,
                 selected: key as ChoicesType
