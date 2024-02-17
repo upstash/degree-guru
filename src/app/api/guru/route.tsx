@@ -40,10 +40,16 @@ export async function POST(req: NextRequest) {
     const { success } = await ratelimit.limit(ip);
   
     if (!success) {
-      return NextResponse.json(
-        { message: "rate limited" },
-        { status: 429 }
-      )
+      const textEncoder = new TextEncoder();
+      const customString = "Oops! It seems you've reached the rate limit. Please try again later.";
+
+      const transformStream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(textEncoder.encode(customString));
+          controller.close();
+        },
+      });
+      return new StreamingTextResponse(transformStream);
     }
 
     const body = await req.json()
