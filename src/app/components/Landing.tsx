@@ -4,8 +4,7 @@ import Message from "./Message"
 const Landing = () => {
   return (
     <div>
-      <div className="p-2 px-5 border-b bg-[#F8F8F8] text-[#43403B] space-y-2">
-        <p className="text-xl">Welcome to DegreeGuru – Your Gateway to Universities!</p>
+      <div className="text-sm p-2 px-5 border-b bg-[#F8F8F8] text-[#43403B] space-y-2">
         <p>
           Welcome to DegreeGuru, your ultimate companion in navigating the academic landscapes of MIT, Harvard, and Stanford.
         </p>
