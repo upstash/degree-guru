@@ -14,7 +14,7 @@ const Choice: React.FC<ChoiceProps> = ({ handleChange, choice, selected, disable
     <button
       onClick={() => handleChange(choice)}
       className={
-        `transition outline-none w-20 m-1 px-2 py-1 text-center border rounded-md ${
+        `transition outline-none m-1 px-2 py-1 text-center border rounded-md ${
         selected === choice ? 'bg-gray-800 text-[#F0F0F0]' : 'bg-[#FFFFFF]'
       } `}
       disabled={disabled}
