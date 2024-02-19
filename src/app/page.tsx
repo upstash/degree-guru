@@ -64,7 +64,7 @@ export default function Home() {
             messages.map(m => (<Message message={m} key={m.id}/>))
           }
         </div>
-        <div className="border-t border-gray-200 w-full relative">
+        <div className="text-sm border-t border-gray-200 w-full relative">
             <form
               onSubmit={e => {
                 handleSubmit(e, {

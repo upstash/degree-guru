@@ -34,7 +34,7 @@ export const Choices: React.FC<ChoicesProps> = ({ handleChange, selected, disabl
   const choices: ChoicesType[] = ["Stanford", "MIT", "Harvard"]
 
   return (
-    <div className="border rounded-md flex mt-2 px-1 bg-[#F0F0F0]">
+    <div className="text-sm border rounded-md flex mt-2 px-1 bg-[#F0F0F0]">
       {
         choices.map(
           choice => (
