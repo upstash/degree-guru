@@ -45,6 +45,8 @@ As outlined in the project description, the project comprises two primary compon
 
 ### Crawler
 
+![crawler-diagram](figs/diagram-crawl.png)
+
 The crawler is developed using Python, by [initializing a Scrapy project](https://docs.scrapy.org/en/latest/intro/tutorial.html#creating-a-project) and implementing a [custom spider](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py). The spider is equipped with [the `parse_page` function](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L42), invoked each time the spider visits a webpage. This callback function performs the task of segmenting the text on the webpage into chunks, generating embeddings for each chunk, and subsequently upserting the vectors into the Upstash Vector Database. Alongside the vectors representing the text, the chunk's text and the website URL are transmitted to the database as metadata.
 
 </br>
@@ -165,6 +167,8 @@ Note that this will take some time. You can observe the progress by looking at t
 
 ### ChatBot
 
+![chatbot-diagram](figs/diagram-degreeguru.png)
+
 Before running the ChatBot locally, we need to set the environment variables as shown in the [`.env.local.example`](https://github.com/upstash/degreeguru/blob/master/.env.local.example). To start off, copy the example environment file to the actual environment file we will update:
 
 ```bash
@@ -200,6 +204,8 @@ To enable/disable streaming, simply navigate to `src/app/route/guru` directory a
 
 </details>
 
+To customize the ChatBot further, you may want to update [the AGENT_SYSTEM_TEMPLATE in route.tsx file](https://github.com/upstash/DegreeGuru/blob/master/src/app/api/guru/route.tsx#L101). Note that we reference Stanford University in our template. You may want to change this for your own application if you use a different university.
+
 </br>
 
 ## Conclusion
@@ -212,4 +218,4 @@ The project has a few shortcomings we can mention:
 
 - [`UpstashVectorStore`](https://github.com/upstash/degreeguru/blob/master/src/app/vectorstore/UpstashVectorStore.js) extends the LangChain vector store but it is not a complete implementation. It only implements the `similaritySearchVectorWithScore` method which is needed for our agent. Once the vector store is properly added to LangChain, this project can be updated with the new vector store.
 - When the non-streaming mode is enabled, message history causes an error after the user enters another query.
-- Our sources are available as urls in the Upstash Vector Database but we are not able to show the sources explicitly in the streaming mode.
+- Our sources are available as urls in the Upstash Vector Database but we are not able to show the sources explicitly in the streaming mode. Instead, we provide the links to the chatbot as context and expect the bot to include the links in the response.
