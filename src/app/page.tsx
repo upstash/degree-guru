@@ -4,19 +4,10 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link'
 import { useChat } from 'ai/react';
 import Message from './components/Message';
-import { Choices, ChoicesType } from './components/Choices';
 import Landing from './components/Landing';
 
 export default function Home() {
-  const [state, setSelectedOption] = useState<{
-    selected: ChoicesType;
-    showLanding: boolean;
-    streaming: boolean
-  }>({
-    selected: "Stanford",
-    showLanding: true,
-    streaming: false
-  });
+  const [state, setSelectedOption] = useState<{streaming: boolean}>({streaming: false});
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/guru",
@@ -47,21 +38,6 @@ export default function Home() {
             </Link>
           </h1>
         </div>
-        <div>
-          <Choices
-            handleChange={(key) => {
-              setSelectedOption(prevState => ({
-                ...prevState,
-                selected: key as ChoicesType
-              }));
-            }}
-            selected={state.selected}
-            disabled={state.streaming}
-          />
-        </div>
-        <div>
-          {/* empty div */}
-        </div>
       </div>
       
       <div className="h-[84vh] transition-all w-3/4 lg:w-1/2 flex flex-col items-center border-x scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-1 overflow-y-scroll">
@@ -75,14 +51,9 @@ export default function Home() {
       <div className="h-[8.5vh] absolute bottom-0 lg:left-1/4 w-3/4 lg:w-1/2 text-sm border border-gray-200">
           <form
             onSubmit={e => {
-              handleSubmit(e, {
-                data: {
-                  vectorStore: state.selected
-                },
-              });
+              handleSubmit(e);
               setSelectedOption(prevState => ({
                 ...prevState,
-                showLanding: false,
                 streaming: true
               }));
             }}

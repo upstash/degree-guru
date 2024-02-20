@@ -1,6 +1,6 @@
 # DegreeGuru
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fupstash%2Fdegreeguru&env=UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,UPSTASH_VECTOR_REST_URL_STANFORD,UPSTASH_VECTOR_REST_TOKEN_STANFORD,UPSTASH_VECTOR_REST_URL_MIT,UPSTASH_VECTOR_REST_TOKEN_MIT,UPSTASH_VECTOR_REST_URL_HARVARD,UPSTASH_VECTOR_REST_TOKEN_HARVARD,OPENAI_API_KEY&demo-title=DegreeGuru%20Demo&demo-description=A%20Demo%20Showcasing%20the%20DegreeGuru%20App&demo-url=https%3A%2F%2Fdegreeguru.vercel.app%2F&demo-image=https%3A%2F%2Fupstash.com%2Ficons%2Ffavicon-32x32.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fupstash%2Fdegreeguru&env=UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,UPSTASH_VECTOR_REST_URL,UPSTASH_VECTOR_REST_TOKEN,OPENAI_API_KEY&demo-title=DegreeGuru%20Demo&demo-description=A%20Demo%20Showcasing%20the%20DegreeGuru%20App&demo-url=https%3A%2F%2Fdegreeguru.vercel.app%2F&demo-image=https%3A%2F%2Fupstash.com%2Ficons%2Ffavicon-32x32.png)
 
 ![overview](figs/overview.gif)
 
@@ -174,8 +174,6 @@ cp .env.local.example .env.local
 `UPSTASH_VECTOR_REST_URL` and `UPSTASH_VECTOR_REST_TOKEN` are needed to access the Upstash Vector Database. Here, we can use the read-only tokens provided by Upstash since we only need to query the vector database.
 
 ![vector-db-read-only](figs/vector-db-read-only.png)
-
-In our project, we have three vector stores, each representing one university. Therefore, we have three pairs of environment variables for vector stores. To configure the chatbot for different options, update [`VectorStoreConfig.ts`](https://github.com/upstash/DegreeGuru/blob/master/src/app/vectorstore/VectorStoreConfig.ts) to update the api endpoint and [`Choices.tsx`](https://github.com/upstash/DegreeGuru/blob/master/src/app/components/Choices.tsx) to update the ui. Additionally, you will need to change `.env.local`, which is created by copying [`.env.local.example`](#chatbot)
 
 `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are needed for rate-limiting based on IP address. In order to get these secrets, go to Upstash dashboard and create a Redis database.
 

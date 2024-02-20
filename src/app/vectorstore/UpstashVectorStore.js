@@ -7,14 +7,14 @@ export class UpstashVectorStore extends VectorStore {
         return "upstash";
     }
 
-    constructor(embeddings, vectorUrl, vectorToken) {
-        super(embeddings);
-
-        this.index = new Index({
-            url: vectorUrl,
-            token: vectorToken,
-        });
-    }
+    constructor(embeddings) {
+            super(embeddings);
+    
+            this.index = new Index({
+                url: process.env.UPSTASH_VECTOR_URL,
+                token: process.env.UPSTASH_VECTOR_TOKEN,
+            });
+        }
 
     async similaritySearchVectorWithScore(query, k, filter) {
         const result = await this.index.query({
