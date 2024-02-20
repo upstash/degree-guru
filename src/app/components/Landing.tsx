@@ -26,14 +26,18 @@ const Landing = () => {
       </div>
       <Message message={{
         role: "user",
-        content: "What are some of the undergraduate programs available?"
+        content: "I am interested in aviation. What program can I study?"
       }}/>
       <Message message={{
         role: "bot",
         content: `
-Hello! At Stanford University, there are several undergraduate programs available. Three of Stanford’s seven schools award undergraduate degrees: Humanities and Sciences; Engineering; and the Stanford Doerr School of Sustainability. Undergraduates complete at least 180 units, including major courses, writing and rhetoric requirements, and one year of a foreign language. All undergraduates also complete their Ways of Thinking / Ways of Doing general education requirements: 11 courses in 8 interdisciplinary Ways categories. You can find more information about undergraduate programs at Stanford University [here](https://facts.stanford.edu/academics/undergraduate/).
-          
-If you have any further questions or need more information, feel free to ask!
+Hello,
+
+At Stanford University, you can study aviation through the Department of Aeronautics and Astronautics. This department offers programs in aerospace engineering, aeronautics, and astronautics. Students learn flight basics through design in AA 100: Introduction to Aeronautics and Astronautics. The department has a rich history and highly decorated faculty, making it one of the top aerospace engineering departments in the nation. You can find more information about the programs and research collaborations on the department's official website: [Department of Aeronautics and Astronautics at Stanford University](https://aa.stanford.edu/).
+
+If you have any further questions or need more details, feel free to ask.
+
+Promoting knowledge for all, DegreeGuru
           `
       }}/>
     </div>
