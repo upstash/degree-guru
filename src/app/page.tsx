@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useChat } from 'ai/react';
 import Message from './components/Message';
 import Landing from './components/Landing';
+import PoweredBy from './components/PoweredBy';
 
 export default function Home() {
   const [state, setSelectedOption] = useState<{streaming: boolean}>({streaming: false});
@@ -77,7 +78,8 @@ export default function Home() {
             </button>
           </form>
       </div>
+
+      <PoweredBy/>
     </div>
-    
   );
 }
