@@ -6,18 +6,15 @@ const Landing = () => {
     <div>
       <div className="text-sm p-2 px-5 border-b bg-[#F8F8F8] text-[#43403B] space-y-2">
         <p>
-          Welcome to DegreeGuru, your ultimate companion in navigating the academic landscapes of MIT, Harvard, and Stanford.
+          Welcome to DegreeGuru, your ultimate companion in navigating the academic landscape of Stanford.
         </p>
         <h2>Here&apos;s how it works:</h2>
         <ol>
           <li>
-            <strong>1. Select Your Institution:</strong> At the top of the page, you&apos;ll find a selection bar where you can choose the university you&apos;re interested in.
+            <strong>1. Ask Your Question:</strong> Simply type your question into the text field at the bottom of the page.
           </li>
           <li>
-            <strong>2. Ask Away:</strong> Once you&apos;ve selected your preferred university, simply type your question into the text field at the bottom of the page.
-          </li>
-          <li>
-            <strong>3. Get Informed:</strong> Hit enter or click the Send button, and watch as DegreeGuru works its magic.
+            <strong>2. Get Informed:</strong> Hit enter or click the Send button, and watch as DegreeGuru works its magic.
           </li>
         </ol>
         <p>
