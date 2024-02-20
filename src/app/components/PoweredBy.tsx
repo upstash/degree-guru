@@ -24,7 +24,7 @@ const PoweredBy = () => {
             </svg>
           </a>
           <a className="text-[#000000] flex flex-row justify-end" href="https://vercel.com" target="_blank">
-            <svg className="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg>
+            <svg className="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" stroke="currentColor" viewBox="0 0 24 24" width="24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2L2 19.7778H22L12 2Z" fill="currentColor" stroke="currentColor" strokeWidth="1.5"/></svg>
             <p className="font-semibold">Vercel</p>
           </a>
         </div>
