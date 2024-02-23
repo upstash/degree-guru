@@ -4,6 +4,11 @@
 
 ![overview](figs/overview.gif)
 
+> [!NOTE]  
+> **This project is a Community Project.**
+>
+> The project is maintained and supported by the community. Upstash may contribute but does not officially support or assume responsibility for it.
+
 **DegreeGuru** is a chatbot project designed to effortlessly integrate a chatbot into any web project, enabling seamless question-answering functionality within an hour. The project includes a configurable crawler that meticulously traverses the target website, indexing its contents into an Upstash Vector Database. This database becomes the backbone for the chatbot, allowing it to swiftly retrieve relevant context when users pose questions.
 
 Upon receiving a user query, the chatbot leverages the **Upstash Vector Database** to deliver accurate responses utilizing **streaming with Vercel AI**. Additionally, **Upstash rate limiting** is employed to control access, preventing excessive queries from a particular IP address.
