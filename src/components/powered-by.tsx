@@ -12,6 +12,10 @@ const PoweredBy = () => {
       ,{" "}
       <a href="https://vercel.com" target="_blank">
         Vercel
+      </a>{" "}
+      •{" "}
+      <a href="https://github.com/upstash/DegreeGuru" target="_blank">
+        Github
       </a>
     </p>
   );
