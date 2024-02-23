@@ -27,7 +27,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    if (messagesEndRef.current) {
+    if (messagesEndRef.current && messages.length > 3) {
       messagesEndRef.current.scrollIntoView();
     }
   }, [messages]);

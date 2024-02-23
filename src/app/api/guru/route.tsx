@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     );
     const returnIntermediateSteps = false;
     const previousMessages = messages
-      .slice(0, -1)
+      .slice(3, -1)
       .map(convertVercelMessageToLangChainMessage);
     const currentMessageContent = messages[messages.length - 1].content;
 
@@ -77,8 +77,9 @@ export async function POST(req: NextRequest) {
       streaming: true,
     });
 
-    // Extract vector store choice from request body
-
+    /**
+     * Create vector store and retriever
+     */
     const vectorstore = await new UpstashVectorStore(new OpenAIEmbeddings());
     const retriever = vectorstore.asRetriever();
 
