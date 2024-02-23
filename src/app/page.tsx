@@ -7,6 +7,7 @@ import Message from "@/components/message";
 import cx from "@/utils/cx";
 import PoweredBy from "@/components/powered-by";
 import { INITIAL_MESSAGES } from "@/utils/const";
+import MessageLoading from "@/components/message-loading";
 
 export default function Home() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -32,14 +33,12 @@ export default function Home() {
   }, [messages]);
 
   return (
-    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-lvh !pb-[180px] overflow-y-scroll">
+    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-lvh !pb-[240px] overflow-y-scroll">
       <div className="">
         {messages.map((message: MessageProps) => {
           return <Message key={message.id} {...message} />;
         })}
-        {state.streaming && (
-          <Message id="0" content="Loading..." role="system" />
-        )}
+        {state.streaming && <MessageLoading />}
 
         {/* bottom ref */}
         <div ref={messagesEndRef} />

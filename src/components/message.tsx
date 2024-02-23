@@ -34,8 +34,8 @@ const Message: React.FC<MessageProps> = ({ content, role }) => {
   );
 };
 
-const Avatar: React.FC<{ isUser: boolean; className?: string }> = ({
-  isUser,
+const Avatar: React.FC<{ isUser?: boolean; className?: string }> = ({
+  isUser=false,
   className,
 }) => {
   return (
