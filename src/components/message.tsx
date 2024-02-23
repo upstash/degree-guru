@@ -21,6 +21,12 @@ const Message: React.FC<MessageProps> = ({ content, role }) => {
           "py-1.5 md:py-1 space-y-4",
           isUser ? "font-semibold" : "",
         )}
+        options={{
+          overrides: {
+            ol: ({ children }) => <ol className="list-decimal">{children}</ol>,
+            ul: ({ children }) => <ol className="list-disc">{children}</ol>,
+          },
+        }}
       >
         {content}
       </Markdown>

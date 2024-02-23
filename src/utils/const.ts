@@ -7,10 +7,8 @@ export const INITIAL_MESSAGES: Message[] = [
     content: `**Welcome to DegreeGuru**, your ultimate companion in navigating the academic landscape of Stanford.
 
 Here&apos;s how it works:
-
-1. **Ask Your Question:** Simply type your question into the text field at the bottom of the page.
-
-2. **Get Informed:** Hit enter or click the Send button, and watch as DegreeGuru works its magic.
+- **Ask Your Question:** Simply type your question into the text field at the bottom of the page.
+- **Get Informed:** Hit enter or click the Send button, and watch as DegreeGuru works its magic.
 
 Ready to dive in? See an example question and answer below to get a taste of what DegreeGuru can offer.`,
   },
