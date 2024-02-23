@@ -62,7 +62,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
 
         {/* initial question */}
         {messages.length === 1 && (
-          <div className="mt-6 grid grid-cols-2 gap-4">
+          <div className="mt-6 grid md:grid-cols-2 gap-4">
             {INITIAL_QUESTIONS.map((message) => {
               return (
                 <button
