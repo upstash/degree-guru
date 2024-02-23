@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     );
     const returnIntermediateSteps = false;
     const previousMessages = messages
-      .slice(3, -1)
+      .slice(0, -1)
       .map(convertVercelMessageToLangChainMessage);
     const currentMessageContent = messages[messages.length - 1].content;
 
