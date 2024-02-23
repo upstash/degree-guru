@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-  @apply text-blue-500;
+@layer base {
+  a {
+    @apply text-emerald-700 underline decoration-emerald-700/40;
+  }
+
+  label,
+  strong,
+  b {
+    @apply font-semibold;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
 }
