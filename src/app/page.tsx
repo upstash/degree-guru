@@ -45,7 +45,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
   };
 
   useEffect(() => {
-    if (messagesEndRef.current) {
+    if (messagesEndRef.current && messages.length > 3) {
       messagesEndRef.current.scrollIntoView();
     }
   }, [messages]);
