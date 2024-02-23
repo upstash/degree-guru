@@ -9,14 +9,16 @@ import { AIMessage, ChatMessage, HumanMessage } from "@langchain/core/messages";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
-import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
 
-import { UpstashVectorStore } from "../../vectorstore/UpstashVectorStore"
-
+import { UpstashVectorStore } from "@/app/vectorstore/UpstashVectorStore";
 
 export const runtime = "edge";
 
-const redis = Redis.fromEnv()
+const redis = Redis.fromEnv();
 
 const ratelimit = new Ratelimit({
   redis: redis,
@@ -37,10 +39,11 @@ export async function POST(req: NextRequest) {
   try {
     const ip = req.ip ?? "127.0.0.1";
     const { success } = await ratelimit.limit(ip);
-  
+
     if (!success) {
       const textEncoder = new TextEncoder();
-      const customString = "Oops! It seems you've reached the rate limit. Please try again later.";
+      const customString =
+        "Oops! It seems you've reached the rate limit. Please try again later.";
 
       const transformStream = new ReadableStream({
         async start(controller) {
@@ -51,7 +54,7 @@ export async function POST(req: NextRequest) {
       return new StreamingTextResponse(transformStream);
     }
 
-    const body = await req.json()
+    const body = await req.json();
 
     /**
      * We represent intermediate steps as system messages for display purposes,
@@ -175,20 +178,20 @@ export async function POST(req: NextRequest) {
       });
 
       const urls = JSON.parse(
-        `[${result.intermediateSteps[0]?.observation.replaceAll('}\n\n{', '}, {')}]`
-      ).map((source: { url: any; }) => source.url)
+        `[${result.intermediateSteps[0]?.observation.replaceAll("}\n\n{", "}, {")}]`,
+      ).map((source: { url: any }) => source.url);
 
       return NextResponse.json(
         {
           _no_streaming_response_: true,
           output: result.output,
-          sources: urls
+          sources: urls,
         },
         { status: 200 },
       );
     }
   } catch (e: any) {
-    console.log(e.message)
+    console.log(e.message);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
