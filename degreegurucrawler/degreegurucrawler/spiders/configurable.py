@@ -21,8 +21,8 @@ class ConfigurableCrawler(CrawlSpider):
             LinkExtractor(
                 **crawler_config["link_extractor"]
             ),
-        callback="parse_page",
-        follow=True # to enable following links on each page when callback is provided
+            callback="parse_page",
+            follow=True # to enable following links on each page when callback is provided
         ),
     )
 
