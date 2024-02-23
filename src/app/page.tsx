@@ -1,85 +1,83 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link'
-import { useChat } from 'ai/react';
-import Message from './components/Message';
-import Landing from './components/Landing';
-import PoweredBy from './components/PoweredBy';
+import React, { useEffect, useRef, useState } from "react";
+import { Message as MessageProps, useChat } from "ai/react";
+import Form from "@/components/form";
+import Message from "@/components/message";
+import cx from "@/utils/cx";
+import PoweredBy from "@/components/powered-by";
+import { INITIAL_MESSAGES } from "@/utils/const";
+import MessageLoading from "@/components/message-loading";
 
 export default function Home() {
-  const [state, setSelectedOption] = useState<{streaming: boolean}>({streaming: false});
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [state, setSelectedOption] = useState<{ streaming: boolean }>({
+    streaming: false,
+  });
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/guru",
-    onFinish: () => {
-      setSelectedOption(prevState => ({
+    initialMessages: INITIAL_MESSAGES,
+    onResponse: () => {
+      setSelectedOption((prevState) => ({
         ...prevState,
-        streaming: false
+        streaming: false,
       }));
-    }
+    },
   });
 
-  // move view to the bottom of the messages when messages change
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current.scrollIntoView();
     }
   }, [messages]);
 
   return (
-    <div className="p:2 flex h-screen flex-col items-center bg-[#F0F0F0]">
+    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-lvh !pb-[240px] overflow-y-scroll">
+      <div className="">
+        {messages.map((message: MessageProps) => {
+          return <Message key={message.id} {...message} />;
+        })}
+        {state.streaming && <MessageLoading />}
 
-      <div className="h-[7.5vh] w-full bg-[#FFFFFF] pr-40 border-b flex flex-row justify-between">
-        <div className="p-4">
-          <h1 >
-            <Link className="text-xl font-semibold text-[#43403B]" href="/">
-              DegreeGuru
-            </Link>
-          </h1>
-        </div>
-      </div>
-      
-      <div className="h-[84vh] transition-all w-3/4 lg:w-1/2 flex flex-col items-center border-x scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-1 overflow-y-scroll">
-        <Landing/>
-        {
-          messages.map(m => (<Message message={m} key={m.id}/>))
-        }
+        {/* bottom ref */}
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="h-[8.5vh] absolute bottom-0 lg:left-1/4 w-3/4 lg:w-1/2 text-sm border border-gray-200">
-          <form
-            onSubmit={e => {
+      <div
+        className={cx(
+          "fixed z-10 bottom-0 inset-x-0",
+          "flex justify-center items-center",
+          "bg-gray-100",
+        )}
+      >
+        <span
+          className="absolute bottom-full h-10 md:h-20 inset-x-0 from-gray-100/0
+         bg-gradient-to-b to-gray-100 pointer-events-none"
+        />
+
+        <div className="w-full max-w-screen-md rounded-xl px-4 md:px-5 py-6">
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
               handleSubmit(e);
-              setSelectedOption(prevState => ({
+              setSelectedOption((prevState) => ({
                 ...prevState,
-                streaming: true
+                streaming: true,
               }));
             }}
-            className="m-auto flex items-center justify-center space-x-4 p-4"
-          >
-            <input
-              id="message"
-              type="text"
-              disabled={state.streaming}
-              value={input}
-              onChange={handleInputChange}
-              x-model="newMessage"
-              placeholder="Your question..."
-              className="transition flex-1 rounded-md border border-gray-300 p-2"  
-            />
-            <button
-              className="transition rounded-md bg-gray-800 px-4 py-2 text-[#F0F0F0] disabled:bg-gray-300"
-              disabled={state.streaming}
-            >
-              Send
-            </button>
-          </form>
+            inputProps={{
+              disabled: state.streaming,
+              value: input,
+              onChange: handleInputChange,
+            }}
+            buttonProps={{
+              disabled: state.streaming,
+            }}
+          />
+          <PoweredBy />
+        </div>
       </div>
-
-      <PoweredBy/>
-    </div>
+    </main>
   );
 }
