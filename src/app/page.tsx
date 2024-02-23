@@ -53,7 +53,7 @@ export default function Home() {
         )}
       >
         <span
-          className="absolute bottom-full h-10 inset-x-0 from-gray-100/0
+          className="absolute bottom-full h-10 md:h-20 inset-x-0 from-gray-100/0
          bg-gradient-to-b to-gray-100 pointer-events-none"
         />
 

@@ -13,13 +13,13 @@ const Form: FC<{
       onSubmit={onSubmit}
       className="relative m-auto flex items-center gap-4 mx-4 md:mx-6 justify-center"
     >
-      <Avatar isUser={true} />
+      <Avatar isUser={true} className="md:size-10 bg-gray-300" />
 
       <input
         placeholder="Your question..."
         {...inputProps}
         className={cx(
-          "transition h-10 pl-4 pr-12 flex-1 rounded-md border border-gray-300",
+          "transition h-8 md:h-10 pl-4 pr-12 flex-1 rounded-md border border-gray-400",
           inputProps.className,
         )}
         type="text"
