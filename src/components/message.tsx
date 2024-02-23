@@ -16,7 +16,12 @@ const Message: React.FC<MessageProps> = ({ content, role }) => {
       )}
     >
       <Avatar isUser={isUser} />
-      <Markdown className={cx("py-1.5 md:py-1 space-y-4", isUser ? "font-semibold" : "")}>
+      <Markdown
+        className={cx(
+          "py-1.5 md:py-1 space-y-4",
+          isUser ? "font-semibold" : "",
+        )}
+      >
         {content}
       </Markdown>
     </article>
