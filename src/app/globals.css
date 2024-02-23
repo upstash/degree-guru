@@ -4,7 +4,18 @@
 
 @layer base {
   a {
-    @apply text-emerald-800 underline decoration-emerald-800/40;
+    @apply transition text-emerald-700 underline
+        decoration-emerald-700/60 decoration-2
+        hover:decoration-emerald-700 hover:bg-emerald-200
+        outline-0 focus:ring-2 focus:ring-offset-1 focus:ring-emerald-500;
+  }
+
+  ::selection {
+    @apply bg-emerald-200 text-emerald-950;
+  }
+
+  input:focus {
+    @apply outline-0 ring-2 ring-offset-1 ring-emerald-500 caret-emerald-500;
   }
 
   label,

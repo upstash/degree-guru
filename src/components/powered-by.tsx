@@ -5,17 +5,17 @@ const PoweredBy = () => {
       <a href="https://www.langchain.com/" target="_blank">
         LangChain
       </a>
-      , and{" "}
+      ,{" "}
       <a href="https://upstash.com" target="_blank">
         Upstash Vector
-      </a>
-      ,{" "}
+      </a>{" "}
+      and{" "}
       <a href="https://vercel.com" target="_blank">
         Vercel
       </a>{" "}
-      •{" "}
+      ・{" "}
       <a href="https://github.com/upstash/DegreeGuru" target="_blank">
-        Github
+        Source Code
       </a>
     </p>
   );

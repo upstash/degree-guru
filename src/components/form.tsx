@@ -27,6 +27,7 @@ const Form: FC<{
       <button
         {...buttonProps}
         type="submit"
+        tabIndex={-1}
         className={cx(
           "absolute right-3 top-1/2 -translate-y-1/2",
           "opacity-50 pointer-events-none",
