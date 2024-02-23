@@ -4,7 +4,7 @@
 
 @layer base {
   a {
-    @apply text-emerald-700 underline decoration-emerald-700/40;
+    @apply text-emerald-800 underline decoration-emerald-800/40;
   }
 
   label,

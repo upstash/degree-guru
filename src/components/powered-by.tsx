@@ -1,6 +1,6 @@
 const PoweredBy = () => {
   return (
-    <p className="mt-4 text-xs md:text-sm text-center">
+    <p className="mt-4 text-xs md:text-sm text-gray-600 text-center">
       DegreeGuru is powered by{" "}
       <a href="https://www.langchain.com/" target="_blank">
         LangChain
