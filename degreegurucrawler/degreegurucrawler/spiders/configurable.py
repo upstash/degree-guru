@@ -34,10 +34,16 @@ class ConfigurableCrawler(CrawlSpider):
             token=os.environ["UPSTASH_VECTOR_REST_TOKEN"]
         )
 
+        print(
+            f"Creating a vector index at {os.environ['UPSTASH_VECTOR_REST_URL']}.\n"
+            f" Vector store info before crawl: {self.vectorstore.index.info()}"
+        )
+
         self.text_splitter = RecursiveCharacterTextSplitter(
             **text_splitter_config
         )
 
+        self._disable_loggers()
 
     def _disable_loggers(self):
         """
