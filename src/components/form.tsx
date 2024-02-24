@@ -1,29 +1,33 @@
-import { ComponentProps, FC, FormEvent } from "react";
-import cx from "@/utils/cx";
+import { ComponentProps, forwardRef } from "react";
 import { IconArrowBack } from "@tabler/icons-react";
-import { Avatar } from "@/components/message";
+import cx from "@/utils/cx";
 
-const Form: FC<{
-  onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
+export interface Props extends ComponentProps<"form"> {
   inputProps: ComponentProps<"input">;
   buttonProps: ComponentProps<"button">;
-}> = ({ onSubmit = () => {}, inputProps, buttonProps }) => {
+}
+
+const Form = ({ inputProps, buttonProps, onSubmit }: Props, ref: any) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="relative m-auto flex items-center gap-4 mx-4 md:mx-6 justify-center"
+      className="relative m-auto flex items-center gap-4 justify-center"
+      ref={ref}
     >
-      <Avatar isUser={true} className="md:size-10 bg-gray-300" />
+      {/*<Avatar isUser={true} className="md:size-10 bg-gray-300" />*/}
 
       <input
         placeholder="Your question..."
         {...inputProps}
         className={cx(
-          "transition h-8 md:h-10 pl-4 pr-12 flex-1 rounded-md border border-gray-400",
+          "transition h-10 md:h-12 pl-4 pr-12 flex-1 rounded-xl",
+          "border border-gray-400",
+          "disabled:bg-gray-100",
           inputProps.className,
         )}
         type="text"
       />
+
       <button
         {...buttonProps}
         type="submit"
@@ -39,4 +43,4 @@ const Form: FC<{
   );
 };
 
-export default Form;
+export default forwardRef(Form);
