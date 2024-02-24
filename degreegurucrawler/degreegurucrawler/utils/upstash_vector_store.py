@@ -11,7 +11,6 @@ class UpstashVectorStore:
     ):
         self.client = OpenAI()
         self.index = Index(url=url, token=token)
-        import pdb; pdb.set_trace()
 
     def get_embeddings(
             self,
