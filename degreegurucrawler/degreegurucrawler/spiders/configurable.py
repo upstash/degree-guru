@@ -30,12 +30,12 @@ class ConfigurableSpider(CrawlSpider):
         super().__init__(*a, **kw)
 
         self.vectorstore = UpstashVectorStore(
-            url=os.environ["UPSTASH_VECTOR_REST_URL"],
-            token=os.environ["UPSTASH_VECTOR_REST_TOKEN"]
+            url=os.environ.get("UPSTASH_VECTOR_REST_URL"),
+            token=os.environ.get("UPSTASH_VECTOR_REST_TOKEN")
         )
 
         print(
-            f"Creating a vector index at {os.environ['UPSTASH_VECTOR_REST_URL']}.\n"
+            f"Creating a vector index at {os.environ.get('UPSTASH_VECTOR_REST_URL')}.\n"
             f" Vector store info before crawl: {self.vectorstore.index.info()}"
         )
 
