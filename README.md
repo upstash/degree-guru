@@ -195,7 +195,7 @@ cp .env.local.example .env.local
 
 Finally, set the `OPENAI_API_KEY` environment variable to embed user queries and to generate a response.
 
-Once the environment variables are set, DegreeGuru is finally ready to wake up and share its wisdom with the whole world. Simply run the following to start DegreeGuru web application:
+Once the environment variables are set, DegreeGuru is finally ready to wake up and share its wisdom with the whole world. First run `npm install` first to install required packages. Then, simply run the following to start DegreeGuru web application:
 
 ```bash
 npm run dev
