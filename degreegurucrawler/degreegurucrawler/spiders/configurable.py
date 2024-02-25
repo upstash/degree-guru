@@ -12,7 +12,7 @@ from scrapy.linkextractors import LinkExtractor
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
-class ConfigurableCrawler(CrawlSpider):
+class ConfigurableSpider(CrawlSpider):
 
     name = "configurable"
     start_urls = crawler_config["start_urls"]

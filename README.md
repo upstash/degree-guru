@@ -173,7 +173,7 @@ Note that this will take some time. You can observe the progress by looking at t
 ![vector-db](figs/vector-db.png)
 
 > [!TIP]
-> If you want to do a dry run (without creating embeddings or a vector database), you can achieve this by simply commenting [the line where we pass the `callback` parameter to the `Rule` object in `ConfigurableCrawler`](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L38) out
+> If you want to do a dry run (without creating embeddings or a vector database), you can achieve this by simply commenting [the line where we pass the `callback` parameter to the `Rule` object in `ConfigurableSpider`](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L38) out
 
 ### ChatBot
 
