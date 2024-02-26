@@ -110,6 +110,9 @@ pip install -r requirements.txt
 
 </details>
 
+> [!TIP]
+> If you have docker installed, you can skip the "Configure Environment Variables" and "Install Required Python Libraries" sections. Instead you can simply update the environment variables in [docker-compose.yml](https://github.com/upstash/DegreeGuru/blob/master/degreegurucrawler/docker-compose.yml) and run `docker-compose up`. This will create a container running our crawler. Don't forget to configure the crawler as explained in the following sections!
+
 </br>
 
 Upon configuring the environment variables and establishing the virtual environment, you are on the verge of launching the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the `crawler.yaml` file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.

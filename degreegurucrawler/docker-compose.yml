@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  my_service:
+    image: degreegurucrawler
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - UPSTASH_VECTOR_REST_URL=****
+      - UPSTASH_VECTOR_REST_TOKEN=****
+      - OPENAI_API_KEY=****
