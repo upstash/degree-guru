@@ -111,6 +111,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
               disabled: streaming,
             }}
           />
+
           <PoweredBy />
         </div>
       </div>
