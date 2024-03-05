@@ -10,8 +10,8 @@ const PoweredBy = () => {
         Upstash Vector
       </a>{" "}
       and{" "}
-      <a href="https://vercel.com" target="_blank">
-        Vercel
+      <a href="https://sdk.vercel.ai" target="_blank">
+        Vercel AI SDK
       </a>{" "}
       ・{" "}
       <a href="https://github.com/upstash/DegreeGuru" target="_blank">
