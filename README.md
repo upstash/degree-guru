@@ -9,15 +9,13 @@
 >
 > The project is maintained and supported by the community. Upstash may contribute but does not officially support or assume responsibility for it.
 
-**DegreeGuru** is a chatbot project designed to effortlessly integrate a chatbot into any web project, enabling seamless question-answering functionality within an hour. The project includes a configurable crawler that meticulously traverses the target website, indexing its contents into an Upstash Vector Database. This database becomes the backbone for the chatbot, allowing it to swiftly retrieve relevant context when users pose questions.
+**DegreeGuru** is a project designed to teach you making your own AI RAG chatbot on any custom data. Some of our favorite features:
 
-Upon receiving a user query, the chatbot leverages the **Upstash Vector Database** to deliver accurate responses utilizing **streaming with Vercel AI**. Additionally, **Upstash rate limiting** is employed to control access, preventing excessive queries from a particular IP address.
+- 🕷️ Built-in crawler that scrapes the website you point it to, automatically making this data available for the AI
+- ⚡ Fast answers using Upstash Vector and real-time data streaming
+- 🛡️ Includes rate limiting to prevent API abuse
 
-The project employs **OpenAI embeddings** during both the web crawling phase and the user query embedding process. OpenAI models play a crucial role in generating responses by utilizing the relevant context retrieved from the Upstash Vector Database.
-
-Despite its name, DegreeGuru is not limited to any specific domain; it is domain-agnostic. The chatbot can proficiently answer questions from any topic, provided the information is appropriately stored in the vector database. The only domain-specific aspect lies in the crawler settings, which are configurable in the crawler.yaml file and geared towards universities. The chatbot underwent testing by crawling a university website, with a refined denied keyword list ensuring that pages containing specific words in their URLs are excluded from the crawling process.
-
-The versatility of the DegreeGuru project extends beyond crawling university websites. It can effortlessly be employed to crawl any website, creating a comprehensive vector database that can then be utilized to deploy the chatbot for diverse applications.
+This chatbot is trained on data from Stanford University as an example, but is totally domain agnostic. We've created this project so you can turn it into a chatbot with your very own data by simply modifying the `crawler.yaml` file.  
 
 ## Overview
 
@@ -41,41 +39,44 @@ The versatility of the DegreeGuru project extends beyond crawling university web
 
 ## Quickstart
 
-Before doing anything, we recommend commencing by forking this repository on GitHub and subsequently cloning it for local development. Execute the following command to clone the repository:
+For local development, we recommend forking this project and cloning the forked repository to your local machine by running the following command:
 
 ```
 git clone git@github.com:[YOUR_GITHUB_ACCOUNT]/DegreeGuru.git
 ```
 
-As outlined in the project description, the project comprises two primary components: the crawler and the chatbot. Naturally, we will initially focus on how the crawler facilitates the creation of an Upstash Vector Database from any given website. In instances where a vector database is already available, the crawler stage can be bypassed.
+This project contains two primary components: the crawler and the chatbot. First, we'll take a look at how the crawler extracts information from any website you point it to. This data is automatically stored in an Upstash Vector database. If you already have a vector database available, the crawling stage can be skipped.
 
-### Crawler
+### Step 1: Crawler
 
-![crawler-diagram](figs/diagram-crawl.png)
+![crawler-diagram](figs/how-this-project-works.png)
 
-The crawler is developed using Python, by [initializing a Scrapy project](https://docs.scrapy.org/en/latest/intro/tutorial.html#creating-a-project) and implementing a [custom spider](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py). The spider is equipped with [the `parse_page` function](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L42), invoked each time the spider visits a webpage. This callback function performs the task of segmenting the text on the webpage into chunks, generating embeddings for each chunk, and subsequently upserting the vectors into the Upstash Vector Database. Alongside the vectors representing the text, the chunk's text and the website URL are transmitted to the database as metadata.
+The crawler is developed using Python, by [initializing a Scrapy project](https://docs.scrapy.org/en/latest/intro/tutorial.html#creating-a-project) and implementing a [custom spider](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py). The spider is equipped with [the `parse_page` function](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L42), invoked each time the spider visits a webpage. This callback function splits the text on the webpage into chunks, generates vector embeddings for each chunk, and upserts those vectors into your Upstash Vector Database. Each vector stored in our database includes the original text and website URL as metadata.
 
 </br>
 
-To execute the crawler, follow the steps outlined below:
+To run the crawler, follow these steps:
+
+> [!TIP]
+> If you have docker installed, you can skip the "Configure Environment Variables" and "Install Required Python Libraries" sections. Instead you can simply update the environment variables in [docker-compose.yml](https://github.com/upstash/DegreeGuru/blob/master/degreegurucrawler/docker-compose.yml) and run `docker-compose up`. This will create a container running our crawler. Don't forget to configure the crawler as explained in the following sections!
 
 <details>
 
 <summary>Configure Environment Variables</summary>
-Before initiating the crawler, it is essential to configure environment variables. These variables serve the purpose of enabling text embedding with OpenAI and facilitating the transmission of vectors to the Upstash Vector Database.
+Before we can run our crawler, we need to configure environment variables. They let us securely store sensitive information, such as the API keys we need to communicate with OpenAI or Upstash Vector.
 
-If you don't have an Upstash Vector Database already, create one by setting 1536 as the vector size to match the [text-embedding-ada-002](https://platform.openai.com/docs/guides/embeddings) model.
+If you don't already have an Upstash Vector Database, create one [here](https://console.upstash.com/vector) and set 1536 as the vector dimensions. We set 1536 here because that is the amount needed by the embedding model we will use. 
 
 ![vector-db-create](figs/vector-db-create.png)
 
-Following environment variables should be set:
+The following environment variables should be set:
 
 ```
-# UPSTASH VECTOR DB
+# Upstash Vector credentials retrieved here: https://console.upstash.com/vector
 UPSTASH_VECTOR_REST_URL=****
 UPSTASH_VECTOR_REST_TOKEN=****
 
-# OPENAI KEY
+# OpenAI key retrieved here: https://platform.openai.com/api-keys
 OPENAI_API_KEY=****
 ```
 
@@ -110,15 +111,14 @@ pip install -r requirements.txt
 
 </details>
 
-> [!TIP]
-> If you have docker installed, you can skip the "Configure Environment Variables" and "Install Required Python Libraries" sections. Instead you can simply update the environment variables in [docker-compose.yml](https://github.com/upstash/DegreeGuru/blob/master/degreegurucrawler/docker-compose.yml) and run `docker-compose up`. This will create a container running our crawler. Don't forget to configure the crawler as explained in the following sections!
+
 
 </br>
 
-Upon configuring the environment variables and establishing the virtual environment, you are on the verge of launching the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the `crawler.yaml` file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.
+After setting these environment variables, we are almost ready to run the crawler. The subsequent step involves configuring the crawler itself, primarily accomplished through the `crawler.yaml` file located in the `degreegurucrawler/utils` directory. Additionally, it is imperative to address a crucial setting within the `settings.py` file.
 
 <details>
-<summary>Configuring the Crawler Through `crawler.yaml`</summary>
+<summary>Configuring the crawler in `crawler.yaml`</summary>
 
 The crawler.yaml has two main sections: `crawler` and `index`:
 
@@ -139,97 +139,111 @@ index:
     chunk_overlap: 100
 ```
 
-Under the `crawler` section, there are two sections:
+In the `crawler` section, there are two subsections:
 
-- `start_urls`: denotes a list of urls which are the urls our spider will crawling searching from
-- `link_extractor`: denotes a dictionary which will be passed as arguments to [`scrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
-  - `allow`: Only extracts links which match the given regex(s)
-  - `allow_domains`: Only extract links which match the domain(s)
-  - `deny`: Deny links which match the given regex(s)
+- `start_urls`: the entrypoints our crawler will start searching from
+- `link_extractor`: a dictionary passed as arguments to [`scrapy.linkextractors.LinkExtractor`](https://docs.scrapy.org/en/latest/topics/link-extractors.html). Some important parameters are:
+  - `allow`: Only extracts links matching the given regex(s)
+  - `allow_domains`: Only extract links matching the given domain(s)
+  - `deny`: Deny links matching the given regex(s)
 
-Under the `index` section, there are two sections:
+In the `index` section, there are two subsections:
 
-- `openAI_embedding_model`: embedding model to use
-- `test_splitter`: denotes a dictionary which will be passed as arguments to [`langchain.text_splitter.RecursiveCharacterTextSplitter`](https://api.python.langchain.com/en/latest/text_splitter/langchain.text_splitter.RecursiveCharacterTextSplitter.html)
+- `openAI_embedding_model`: The embedding model to use
+- `test_splitter`: a dictionary passed as arguments to [`langchain.text_splitter.RecursiveCharacterTextSplitter`](https://api.python.langchain.com/en/latest/text_splitter/langchain.text_splitter.RecursiveCharacterTextSplitter.html)
 
 </details>
 
 <details>
-<summary>Configuring Depth Through `settings.py`</summary>
+<summary>Configuring crawl depth via `settings.py`</summary>
 
-`settings.py` file has an important setting called `DEPTH_LIMIT` which determines how many consecutive links our spider can crawl. Set a value too high and the spider will visit the deepest corners of the website, taking too long to finish with possibly diminishing returns. Set a value too low and the crawl will end before visiting relevant pages.
+`settings.py` file has an important setting called `DEPTH_LIMIT` which determines how many consecutive links our spider can crawl. A high value lets our crawler visit the deepest corners of a website, taking longer to finish with possibly diminishing returns. A low value could end the crawl before extracting relevant information.
 
-Scrapy logs the urls of pages when they are skipped because of the depth limit. Since this results in a lot of logs, this log type is disabled in our project. To enable it back, simply remove [the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L22).
+If pages are skipped due to the `DEPTH_LIMIT`, Scrapy logs those skipped URLs for us. Because this usually causes a lot of logs, we've disabled this option in our project. If you'd like to keep it enabled, remove  [the `"scrapy.spidermiddlewares.depth"` from the `disable_loggers` in `degreegurucrawler/spider/configurable.py` file](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L22).
 
 </details>
 
 </br>
 
-When you finish configuring the crawler, you are finally ready to run it to create the Upstash Vector Database! Run the following command to start the crawler:
+That's it! 🎉 We've configured our crawler and are ready to run it using the following command:
 
 ```
 scrapy crawl configurable --logfile degreegurucrawl.log
 ```
 
-Note that this will take some time. You can observe the progress by looking at the log file `degreegurucrawl.log` or from the metrics in the dashboard of your Upstash Vector Database.
+Note that running this might take time. You can monitor the progress by looking at the log file `degreegurucrawl.log` or the metrics of your Upstash Vector Database dashboard as shown below.
 
 ![vector-db](figs/vector-db.png)
 
 > [!TIP]
-> If you want to do a dry run (without creating embeddings or a vector database), you can achieve this by simply commenting [the line where we pass the `callback` parameter to the `Rule` object in `ConfigurableSpider`](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L38) out
+> If you want to do a dry run (without creating embeddings or a vector database), simply comment out [the line where we pass the `callback` parameter to the `Rule` object in `ConfigurableSpider`](https://github.com/upstash/degreeguru/blob/master/degreegurucrawler/degreegurucrawler/spiders/configurable.py#L38)
 
-### ChatBot
+### Step 2: Chatbot
 
-![chatbot-diagram](figs/diagram-degreeguru.png)
+In this section, we'll explore how to chat with the data we've just crawled and stored in our vector database. Here's an overview of what this will look like architecturally:
 
-Before running the ChatBot locally, we need to set the environment variables as shown in the [`.env.local.example`](https://github.com/upstash/degreeguru/blob/master/.env.local.example). To start off, copy the example environment file to the actual environment file we will update:
+![chatbot-diagram](figs/infrastructure.png)
 
-```bash
-cp .env.local.example .env.local
+Before we can run the chatbot locally, we need to set the environment variables as shown in the [`.env.local.example`](https://github.com/upstash/degreeguru/blob/master/.env.local.example) file. Rename this file and remove the `.example` ending, leaving us with `.env.local`. 
+
+Your `.env.local` file should look like this:
+```
+# Redis tokens retrieved here: https://console.upstash.com/
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+
+# Vector database tokens retrieved here: https://console.upstash.com/vector
+UPSTASH_VECTOR_REST_URL=
+UPSTASH_VECTOR_REST_TOKEN=
+
+# OpenAI key retrieved here: https://platform.openai.com/api-keys
+OPENAI_API_KEY=
 ```
 
-`UPSTASH_VECTOR_REST_URL` and `UPSTASH_VECTOR_REST_TOKEN` are needed to access the Upstash Vector Database. Here, we can use the read-only tokens provided by Upstash since we only need to query the vector database.
+The first four variables are provided by Upstash, you can visit the commented links for the place to retrieve these tokens. You can find the vector database tokens here:
 
 ![vector-db-read-only](figs/vector-db-read-only.png)
 
-`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are needed for rate-limiting based on IP address. In order to get these secrets, go to Upstash dashboard and create a Redis database.
+The `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are needed for rate-limiting based on IP address. In order to get these secrets, go to Upstash dashboard and create a Redis database.
 
 ![redis-create](figs/redis-create.png)
 
-Finally, set the `OPENAI_API_KEY` environment variable to embed user queries and to generate a response.
+Finally, set the `OPENAI_API_KEY` environment variable you can get [here](https://platform.openai.com/api-keys) which allows us to vectorize user queries and generate responses.
 
-Once the environment variables are set, DegreeGuru is finally ready to wake up and share its wisdom with the whole world. First run `npm install` first to install required packages. Then, simply run the following to start DegreeGuru web application:
+That's the setup done! 🎉 We've configured our crawler, set up all neccessary environment variables are after running `npm install` to install all local packages needed to run the app, we can start our chatbot using the command:
 
 ```bash
 npm run dev
 ```
 
-The web application will typically be available at http://localhost:3000/, unless stated otherwise in the console where `npm run dev` was run.
+Visit `http://localhost:3000` to see your chatbot live in action!
 
-The chat bot can be configured to work in two modes:
+### Step 3: Optional tweaking
 
-- streaming mode: Response of the generative model is streamed to the web application as they are generated by the model. Interaction with the app is more fluid.
-- non-streaming mode: Response of the generative model is shown to the user when the generation is finished. Model takes longer to respond but in this mode DegreeGuru can explicitly provide the urls of the webpages it used as context.
+You can use this chatbot in two different modes:
+
+- Streaming Mode: model responses are streamed to the web application in real-time as the model generates them. Interaction with the app is more fluid.
+- Non-Streaming Mode: Model responses are shown to the user once entirely generated. In this mode, DegreeGuru can explicitly provide the URLs of the web pages it uses as context.
 
 <details>
-<summary>Changing Streaming Mode</summary>
+<summary>Changing streaming mode</summary>
 
-To enable/disable streaming, simply navigate to `src/app/route/guru` directory and open `route.tsx` file. Setting [`returnIntermediateSteps`](https://github.com/upstash/degreeguru/blob/master/src/app/api/guru/route.tsx#L64) to `true` disables streaming while setting it to `false` enables streaming.`
+To turn streaming on/off, navigate to `src/app/route/guru` and open the `route.tsx` file. Setting [`returnIntermediateSteps`](https://github.com/upstash/degreeguru/blob/master/src/app/api/guru/route.tsx#L64) to `true` disables streaming, setting it to `false` enables streaming.
 
 </details>
 
-To customize the ChatBot further, you may want to update [the AGENT_SYSTEM_TEMPLATE in route.tsx file](https://github.com/upstash/DegreeGuru/blob/master/src/app/api/guru/route.tsx#L101). Note that we reference Stanford University in our template. You may want to change this for your own application if you use a different university.
+To customize the chatbot further, you can update the [AGENT_SYSTEM_TEMPLATE in your route.tsx file](https://github.com/upstash/DegreeGuru/blob/master/src/app/api/guru/route.tsx#L101) to better match your specific use case.
 
 </br>
 
 ## Conclusion
 
-In conclusion, DegreeGuru project seamlessly integrates Langchain, Vercel AI, Upstash rate limiting, and Upstash Vector Database. The chatbot delivers accurate responses by efficiently indexing content, demonstrated by the tests we carried out on a university website. With a user-friendly interface and adaptable settings, DegreeGuru is a valuable tool for developers, enhancing user interactions and information retrieval.
+Congratulations on setting up your own AI chatbot! We hope you learned a lot by following along and seeing how the different parts of this app, namely the crawler, vector database, and LLM, play together. A major focus in developing this project was on its user-friendly design and adaptable settings to make this project perfect for your use case.
 
-## Shortcomings
+## Limitations
 
-The project has a few shortcomings we can mention:
+The above implementation works great for a variety of use cases. There are a few limitations I'd like to mention:
 
-- [`UpstashVectorStore`](https://github.com/upstash/degreeguru/blob/master/src/app/vectorstore/UpstashVectorStore.js) extends the LangChain vector store but it is not a complete implementation. It only implements the `similaritySearchVectorWithScore` method which is needed for our agent. Once the vector store is properly added to LangChain, this project can be updated with the new vector store.
-- When the non-streaming mode is enabled, message history causes an error after the user enters another query.
-- Our sources are available as urls in the Upstash Vector Database but we are not able to show the sources explicitly in the streaming mode. Instead, we provide the links to the chatbot as context and expect the bot to include the links in the response.
+- Because the Upstash LangChain integration is a work-in-progress, the [`UpstashVectorStore`](https://github.com/upstash/degreeguru/blob/master/src/app/vectorstore/UpstashVectorStore.js) used with LangChain currently only implements the `similaritySearchVectorWithScore` method needed for our agent. Once we're done developing our native LangChain integration, we'll update this project accordingly.
+- When the non-streaming mode is enabled, the message history can cause an error after the user enters another query.
+- Our sources are available as URLs in the Upstash Vector Database, but we cannot show the sources explicitly when streaming. Instead, we provide the links to the chatbot as context and expect the bot to include the links in the response.
