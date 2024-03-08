@@ -51,7 +51,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
   }, [messages]);
 
   return (
-    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-lvh !pb-[240px] overflow-y-scroll">
+    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-svh !pb-32 md:!pb-40 overflow-y-scroll">
       <div className="w-full">
         {messages.map((message: MessageProps) => {
           return <Message key={message.id} {...message} />;
@@ -62,13 +62,15 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
 
         {/* initial question */}
         {messages.length === 1 && (
-          <div className="mt-6 grid md:grid-cols-2 gap-4">
+          <div className="mt-4 md:mt-6 grid md:grid-cols-2 gap-2 md:gap-4">
             {INITIAL_QUESTIONS.map((message) => {
               return (
                 <button
                   key={message.content}
                   type="button"
-                  className="cursor-pointer select-none text-left bg-white font-normal border border-gray-200 rounded-xl px-4 py-3 hover:bg-gray-50 hover:border-gray-300"
+                  className="cursor-pointer select-none text-left bg-white font-normal
+                  border border-gray-200 rounded-xl p-3 md:px-4 md:py-3
+                  hover:bg-zinc-50 hover:border-zinc-400"
                   onClick={() => onClickQuestion(message.content)}
                 >
                   {message.content}
@@ -90,7 +92,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
         )}
       >
         <span
-          className="absolute bottom-full h-16 md:h-24 inset-x-0 from-white/0
+          className="absolute bottom-full h-10 inset-x-0 from-white/0
          bg-gradient-to-b to-white pointer-events-none"
         />
 
