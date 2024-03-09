@@ -34,7 +34,7 @@ const Form = ({ inputProps, buttonProps, onSubmit }: Props, ref: any) => {
         tabIndex={-1}
         className={cx(
           "absolute right-3 top-1/2 -translate-y-1/2",
-          "opacity-50 pointer-events-none",
+          "opacity-50",
         )}
       >
         <IconArrowBack stroke={1.5} />
