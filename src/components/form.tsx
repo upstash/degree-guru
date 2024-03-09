@@ -18,6 +18,7 @@ const Form = ({ inputProps, buttonProps, onSubmit }: Props, ref: any) => {
 
       <input
         placeholder="Your question..."
+        required
         {...inputProps}
         className={cx(
           "transition h-10 md:h-12 pl-4 pr-12 flex-1 rounded-xl",
