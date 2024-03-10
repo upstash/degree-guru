@@ -81,8 +81,17 @@ export async function POST(req: NextRequest) {
      * Create vector store and retriever
      */
     const vectorstore = await new UpstashVectorStore(new OpenAIEmbeddings());
-    const kOrFields = 6;
-    const retriever = vectorstore.asRetriever(kOrFields);
+    const retriever = vectorstore.asRetriever(
+      {
+        k: 6,
+        searchType: "mmr",
+        searchKwargs: {
+          fetchK: 20,
+          lambda: 0.5
+        },
+        verbose: false
+      },
+    );
 
     /**
      * Wrap the retriever in a tool to present it to the agent in a

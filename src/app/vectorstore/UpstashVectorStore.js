@@ -1,6 +1,8 @@
 import { VectorStore } from "@langchain/core/vectorstores";
 import { Document } from "@langchain/core/documents";
 import { Index } from "@upstash/vector";
+import { maximalMarginalRelevance } from "@langchain/core/utils/math";
+
 
 export class UpstashVectorStore extends VectorStore {
   _vectorstoreType() {
@@ -20,7 +22,7 @@ export class UpstashVectorStore extends VectorStore {
     const result = await this.index.query({
       vector: query,
       topK: k,
-      includeVectors: true,
+      includeVectors: false,
       includeMetadata: true,
     });
 
@@ -31,6 +33,36 @@ export class UpstashVectorStore extends VectorStore {
           pageContent: JSON.stringify(result[i]?.metadata) || "",
         }),
       ]);
+    }
+
+    return results;
+  }
+
+  async maxMarginalRelevanceSearch(query, options) {
+    const queryEmbedding = await this.embeddings.embedQuery(query);
+    const result = await this.index.query({
+      vector: queryEmbedding,
+      topK: options.fetchK ?? 20,
+      includeVectors: true,
+      includeMetadata: true,
+    });
+    const embeddingList = result.map((r) => r.vector)
+
+    const mmrIndexes = maximalMarginalRelevance(
+      queryEmbedding,
+      embeddingList,
+      options.lambda,
+      options.k
+    );
+    const topMmrMatches = mmrIndexes.map((idx) => result[idx]);
+
+    const results = [];
+    for (let i = 0; i < topMmrMatches.length; i++) {
+      results.push(
+        new Document({
+          pageContent: JSON.stringify(topMmrMatches[i]?.metadata) || "",
+        }),
+      );
     }
 
     return results;

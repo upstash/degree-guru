@@ -1,7 +1,17 @@
-import { VectorStore } from "@langchain/core/vectorstores";
 import { Index } from "@upstash/vector";
+import { Document } from "@langchain/core/documents";
+import {
+  MaxMarginalRelevanceSearchOptions,
+  VectorStore,
+} from "@langchain/core/vectorstores";
+
+
+type UpstashMetadata = Record<string, any>;
+
 
 export class UpstashVectorStore extends VectorStore {
+  declare FilterType: PineconeMetadata;
+
   constructor(embeddings: any);
   index: Index;
   similaritySearchVectorWithScore(
@@ -9,4 +19,9 @@ export class UpstashVectorStore extends VectorStore {
     k: any,
     filter: any,
   ): Promise<any[][]>;
+
+  maxMarginalRelevanceSearch(
+    query: string,
+    options: MaxMarginalRelevanceSearchOptions<this["FilterType"]>
+  ): Promise<Document[]>
 }
