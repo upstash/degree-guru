@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Message as MessageProps, useChat } from "ai/react";
 import Form from "@/components/form";
 import Message from "@/components/message";
@@ -49,6 +49,15 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
       messagesEndRef.current.scrollIntoView();
     }
   }, [messages]);
+
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      handleSubmit(e);
+      setStreaming(true);
+    },
+    [handleSubmit],
+  );
 
   return (
     <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-svh !pb-32 md:!pb-40 overflow-y-auto">
@@ -99,11 +108,7 @@ Your ultimate companion in navigating the academic landscape of Stanford.`,
         <div className="w-full max-w-screen-md rounded-xl px-4 md:px-5 py-6">
           <Form
             ref={formRef}
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit(e);
-              setStreaming(true);
-            }}
+            onSubmit={onSubmit}
             inputProps={{
               disabled: streaming,
               value: input,
