@@ -75,6 +75,9 @@ export async function POST(req: NextRequest) {
       temperature: 0.2,
       // IMPORTANT: Must "streaming: true" on OpenAI to enable final output streaming below.
       streaming: true,
+    }, {
+      apiKey: process.env.OPENAI_API_KEY,
+      organization: process.env.OPENAI_ORGANIZATION
     });
 
     /**
