@@ -4,8 +4,8 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Message as VercelChatMessage } from "ai";
 import { Redis } from "@upstash/redis"
 import { Index } from "@upstash/vector";
-import { PrepareChatResult, RAGChat, upstash } from "@upstash/rag-chat/base/index.mjs";
-import { aiUseChatAdapter } from "@upstash/rag-chat/nextjs/rsc-server.mjs";
+import { RAGChat, openai } from "@upstash/rag-chat";
+import { aiUseChatAdapter } from "@upstash/rag-chat/nextjs";
 
 const redis = new Redis({
   url: 'https://fit-moth-42559.upstash.io',
@@ -20,13 +20,13 @@ const ratelimit = new Ratelimit({
 const ragChat = new RAGChat({
   ratelimit,
   debug: true,
-  model: upstash("mistralai/Mistral-7B-Instruct-v0.2", {apiKey: "eyJVc2VySUQiOiIwZDk3MTgxMC1kNDBlLTRhYWUtOTkyNi03ZjU2YWI2YzFhNzEiLCJQYXNzd29yZCI6Ijk0NTM1NGZiZDY5MDRkNTI5OWRkYTE3OGI0YWIyNWI3In0="}),
+  model: openai("gpt-3.5-turbo"),
   vector: new Index({
     url: "https://thankful-gorilla-71414-eu1-vector.upstash.io",
     token: "ABoFMHRoYW5rZnVsLWdvcmlsbGEtNzE0MTQtZXUxYWRtaW5PVFUxTkROaU5UQXRPRE5qTWkwMFltSTFMVGt6TVRVdFpqQTRZakJoTnpRd01XSXo=",
   }),
   redis,
-  prompt: ({ question, chatHistory, context }) => `
+  promptFn: ({ question, chatHistory, context }) => `
 You are an artificial intelligence university bot named DegreeGuru, programmed to respond to inquiries about Stanford in a highly systematic and data-driven manner.
 
 Begin your answers with a formal greeting and sign off with a closing statement about promoting knowledge.
@@ -63,13 +63,14 @@ export async function POST(req: NextRequest) {
     const response = await ragChat.chat(question.content,
       {
         streaming: true,
-        onContextFetched: (context: PrepareChatResult["context"]) => {
-          const result: PrepareChatResult["context"] = context.map(contextBit => {
+        onContextFetched: (context) => {
+          const result = context.map(contextBit => {
+            const metadata = contextBit.metadata as { url: string }
             return {
               id: contextBit.id,
               data: JSON.stringify({
                 text: contextBit.data,
-                url: contextBit.metadata.url
+                url: metadata.url
               }),
               metadata: contextBit.metadata
             }
