@@ -7,20 +7,17 @@ import { Index } from "@upstash/vector";
 import { RAGChat, openai } from "@upstash/rag-chat";
 import { aiUseChatAdapter } from "@upstash/rag-chat/nextjs";
 
-const redis = new Redis({
-  url: 'https://fit-moth-42559.upstash.io',
-  token: 'AaY_AAIncDFhMWUwNjViNDEyNTM0NzFkYjJlMmRkMTBkN2Y2ODZhNXAxNDI1NTk',
-});
+const redis = Redis.fromEnv()
 
 const ratelimit = new Ratelimit({
-  redis: redis,
+  redis,
   limiter: Ratelimit.slidingWindow(1, "10 s"),
 });
 
 const ragChat = new RAGChat({
   ratelimit,
-  debug: true,
-  model: openai("gpt-3.5-turbo"),
+  debug: false,
+  model: openai("gpt-3.5-turbo", { organization: process.env.OPENAI_ORGANIZATION }),
   vector: new Index({
     url: "https://thankful-gorilla-71414-eu1-vector.upstash.io",
     token: "ABoFMHRoYW5rZnVsLWdvcmlsbGEtNzE0MTQtZXUxYWRtaW5PVFUxTkROaU5UQXRPRE5qTWkwMFltSTFMVGt6TVRVdFpqQTRZakJoTnpRd01XSXo=",
