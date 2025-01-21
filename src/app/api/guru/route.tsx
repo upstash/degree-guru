@@ -19,8 +19,8 @@ const ragChat = new RAGChat({
   debug: false,
   model: openai("gpt-3.5-turbo", { organization: process.env.OPENAI_ORGANIZATION }),
   vector: new Index({
-    url: process.env.UPSTASH_VECTOR_REST_URL,
-    token: process.env.UPSTASH_VECTOR_REST_TOKEN,
+    url: "https://thankful-gorilla-71414-eu1-vector.upstash.io",
+    token: "ABoFMHRoYW5rZnVsLWdvcmlsbGEtNzE0MTQtZXUxYWRtaW5PVFUxTkROaU5UQXRPRE5qTWkwMFltSTFMVGt6TVRVdFpqQTRZakJoTnpRd01XSXo=",
   }),
   redis,
   promptFn: ({ question, chatHistory, context }) => `
