@@ -30,11 +30,6 @@ This chatbot is trained on data from Stanford University as an example, but is t
 
 ## Stack
 
-> [!NOTE]  
-> This project was updated to use [the RAG-Chat SDK](https://github.com/upstash/rag-chat) in [#12](https://github.com/upstash/degree-guru/pull/12).
->
-> The rest of the README explains how it used to work before RAG-Chat. You can find the state of the project before RAG-Chat [here](https://github.com/upstash/degree-guru/tree/e57ffe21fe060cc1d34ec15ebbbb5a72a5a4b1d7).
-
 - Crawler: [scrapy](https://scrapy.org/)
 - Chatbot App: [Next.js](https://nextjs.org/)
 - Vector DB: [Upstash](https://upstash.com/)
